@@ -2,9 +2,38 @@
 <html lang="ja">
     <head>
         <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="item_management.js"></script>
         <title>Add Item</title>
     </head>
     <body>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="item_management.js"></script>
+        <p>Add Item</p>
+        <table class="item_list">
+            <ul id="view_item_list">
+
+            </ul>
+        </table>
+        <form>
+            <div>
+                <label id="name" for="item_name">name</label>
+                <input type="text" id="item_name" name="iname">
+            </div>
+            <div>
+                <label id="price" for="item_price">price</label>
+                <input type="number" id="item_price" name="iprice">
+            </div>
+            <div>
+                <label id="cost" for="cost_price">cost price</label>
+                <input type="number" id="cost_price" name="icost">
+            </div>
+            <div>
+                <label id="amount" for="item_amount">amount</label>
+                <input type="number" id="item_amount" name="iamount">
+            </div>
+            <div>
+                <input id="submit" type="button" value="Add">
+            </div>
+            <div id="result"></div>
+        </form>
     </body>
+</html>
