@@ -8,32 +8,41 @@
     </head>
     <body>
         <p>Add Item</p>
-        <table class="item_list">
-            <ul id="view_item_list">
-
-            </ul>
-        </table>
-        <form>
-            <div>
-                <label id="name" for="item_name">name</label>
-                <input type="text" id="item_name" name="iname">
+        <div id="contents-wrapper">
+            <div id="leftside_column">
+                <table class="item_list">
+                    <ul id="view_item_list">
+        
+                    </ul>
+                </table>
             </div>
-            <div>
-                <label id="price" for="item_price">price</label>
-                <input type="number" id="item_price" name="iprice">
+            <div id="rightside_column">
+                <form>
+                    <div>
+                        <label id="name" for="item_name">name</label>
+                        <input type="text" id="item_name" name="iname">
+                    </div>
+                    <div>
+                        <label id="price" for="item_price">price</label>
+                        <input type="number" id="item_price" name="iprice">
+                    </div>
+                    <div>
+                        <label id="cost" for="cost_price">cost price</label>
+                        <input type="number" id="cost_price" name="icost">
+                    </div>
+                    <div>
+                        <label id="amount" for="item_amount">amount</label>
+                        <input type="number" id="item_amount" name="iamount">
+                    </div>
+                    <div>
+                        <input id="submit" type="button" value="Add">
+                    </div>
+                    <div id="result"></div>
+                </form>
             </div>
-            <div>
-                <label id="cost" for="cost_price">cost price</label>
-                <input type="number" id="cost_price" name="icost">
-            </div>
-            <div>
-                <label id="amount" for="item_amount">amount</label>
-                <input type="number" id="item_amount" name="iamount">
-            </div>
-            <div>
-                <input id="submit" type="button" value="Add">
-            </div>
-            <div id="result"></div>
-        </form>
+            <footer<>
+                
+            </footer>
+        </div>
     </body>
 </html>

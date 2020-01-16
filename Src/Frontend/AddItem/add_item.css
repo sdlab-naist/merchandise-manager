@@ -1,0 +1,13 @@
+.leftside_column {
+    width: 50%;
+    float: left;
+}
+
+.rightside_column {
+    width: 50%;
+    float: right;
+}
+
+footer {
+    clear: both;
+}
