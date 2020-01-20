@@ -18,7 +18,7 @@ type Item struct {
 	Name string	`db:"Name" json:"Name"`
 	Price float64 `db:"Price" json:"Price"`
 	Cost float64 `db:"Cost" json:"Cost"`
-	Amount int32 `db:"Amount" json:"Amount"`
+	Amount int64 `db:"Amount" json:"Amount"`
 }
 
 type ConfigurationDB struct {
@@ -32,6 +32,7 @@ type ConfigurationDB struct {
 var dbmap = initDb()
 
 func initDb() *gorp.DbMap {
+	fmt.Println("Establishing . . .")
 	file, _ := os.Open("config_db.json")
 	defer file.Close()
 	decoder := json.NewDecoder(file)
@@ -75,7 +76,6 @@ func main() {
 		var itemOld Item
 		c.Bind(&itemNew)
 		err := dbmap.SelectOne(&itemOld, "SELECT * FROM Items WHERE Name=?", itemNew.Name)
-		c.JSON(200, err)
 		if err == nil{ // exist
 			if itemNew.Name != "" && itemNew.Amount != 0 {
 				itemNew := Item{
@@ -117,18 +117,44 @@ func main() {
 		}
 	})
 
-
-
-	
-
-
-
-
-
-
 	//03
 	router.POST("/deleteItem", func(c *gin.Context){
-		c.String(http.StatusOK,"Delete Item")
+		// c.String(http.StatusOK,"Delete Item")
+		var itemNew Item
+		var itemOld Item
+		c.Bind(&itemNew)
+		err := dbmap.SelectOne(&itemOld, "SELECT * FROM Items WHERE Name=?", itemNew.Name)
+		if err == nil{ // exist
+			if itemNew.Amount > itemOld.Amount {
+				itemOldAmount := fmt.Sprintf("The number of existing item is %d",itemOld.Amount)
+				c.JSON(400, gin.H{"error": itemOldAmount})
+			}
+			if itemNew.Amount < itemOld.Amount {
+				itemNew := Item{
+					ID:        itemOld.ID,
+					Name: 	   itemOld.Name,
+					Price:     itemOld.Price,
+					Cost:      itemOld.Cost,
+					Amount:    itemOld.Amount-itemNew.Amount,
+				}
+				delete, _ := dbmap.Exec(`UPDATE Items SET Price=?, Cost=?, Amount=? WHERE ID=? AND Name=?`,itemNew.Price, itemNew.Cost, itemNew.Amount, itemOld.ID, itemOld.Name); 
+				if delete != nil {
+					c.JSON(200, itemNew)
+				} else {
+					checkErr(err, "Deleted failed")
+				}
+			}
+			if itemNew.Amount == itemOld.Amount {
+				delete, _ := dbmap.Exec(`DELETE FROM Items WHERE ID=? AND Name=?`, itemOld.ID, itemOld.Name); 
+				if delete != nil {
+					c.JSON(200, "The item is deleted")
+				} else {
+					checkErr(err, "Deleted failed")
+				}
+			}
+		} else { // non-exist
+			c.JSON(400, gin.H{"error": "The item is not existing"})
+		}
 	})
 
 	//04
