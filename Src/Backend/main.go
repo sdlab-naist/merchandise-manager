@@ -1,10 +1,54 @@
 package main
 
 import (	
+	"database/sql"
+	"gopkg.in/gorp.v1"
+	"encoding/json"
+	"os"
+	// "fmt"
 	"net/http"
+	"log"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+    _ "github.com/go-sql-driver/mysql"
 )
+
+type Item struct {
+	ID    int64`db:"ID" json:"ID"`
+	Name string	`db:"Name" json:"Name"`
+	Price float64 `db:"Price" json:"Price"`
+	Cost float64 `db:"Cost" json:"Cost"`
+	Amount int32 `db:"Amount" json:"Amount"`
+}
+
+type ConfigurationDB struct {
+    Username    string
+	Password    string
+	Host 		string
+	Port		string
+	DB_name		string
+}
+
+var dbmap = initDb()
+
+func initDb() *gorp.DbMap {
+	file, _ := os.Open("config_db.json")
+	defer file.Close()
+	decoder := json.NewDecoder(file)
+	Cdb := ConfigurationDB{}
+	err := decoder.Decode(&Cdb)
+	addr := Cdb.Username+":"+Cdb.Password+"@tcp("+Cdb.Host+":"+Cdb.Port+")/"+Cdb.DB_name
+	db, err := sql.Open("mysql", addr)
+	checkErr(err, "sql.Open failed")
+	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.MySQLDialect{"InnoDB", "UTF8"}}
+	return dbmap
+}
+
+func checkErr(err error, msg string) {
+	if err != nil {
+		log.Fatalln(msg, err)
+	}
+}
 
 func main() {
 	router := gin.Default()
@@ -14,9 +58,16 @@ func main() {
 		c.String(http.StatusOK,"Merchandise Manager Serving . . .")
 	})
 
-	//01
-	router.GET("/requestItemList", func(c *gin.Context){
-		c.String(http.StatusOK,"Request Item List")
+	//01 '/requestItemList'
+	router.GET("/getItems", func(c *gin.Context){
+		var items []Item
+	_, err := dbmap.Select(&items, "SELECT * FROM Items")
+
+	if err == nil {
+		c.JSON(200, items)
+	} else {
+		c.JSON(404, gin.H{"error": "nx"})
+	}
 	})
 
 	//02
