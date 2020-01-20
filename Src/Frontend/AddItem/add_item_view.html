@@ -2,21 +2,36 @@
 <html lang="ja">
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="add_item.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript" src="item_management.js"></script>
         <title>Add Item</title>
     </head>
     <body>
         <p>Add Item</p>
-        <div id="contents-wrapper">
-            <div id="leftside_column">
+        <div class="container">
+            <div class="left">
                 <table class="item_list">
-                    <ul id="view_item_list">
-        
-                    </ul>
+                    <thead>
+                        <tr>
+                            <!--th width="200">Item List</th-->
+                            <th>name</th>
+                            <th>price</th>
+                            <th>cost</th>
+                            <th>amont</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>生茶</td>
+                            <td>160</td>
+                            <td>90</td>
+                            <td>24</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
-            <div id="rightside_column">
+            <div class="right">
                 <form>
                     <div>
                         <label id="name" for="item_name">name</label>
@@ -40,8 +55,8 @@
                     <div id="result"></div>
                 </form>
             </div>
-            <footer<>
-                
+            <footer>
+
             </footer>
         </div>
     </body>

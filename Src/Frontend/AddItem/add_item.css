@@ -1,11 +1,13 @@
-.leftside_column {
-    width: 50%;
-    float: left;
+.container {
+    display: flex;
 }
 
-.rightside_column {
-    width: 50%;
-    float: right;
+.left {
+    width: 500px;
+}
+
+.right {
+    flex: 1;
 }
 
 footer {
