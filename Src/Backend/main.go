@@ -5,7 +5,7 @@ import (
 	"gopkg.in/gorp.v1"
 	"encoding/json"
 	"os"
-	// "fmt"
+	"fmt"
 	"net/http"
 	"log"
 	"github.com/gin-contrib/cors"
@@ -61,19 +61,70 @@ func main() {
 	//01 '/requestItemList'
 	router.GET("/getItems", func(c *gin.Context){
 		var items []Item
-	_, err := dbmap.Select(&items, "SELECT * FROM Items")
-
-	if err == nil {
-		c.JSON(200, items)
-	} else {
-		c.JSON(404, gin.H{"error": "nx"})
-	}
+	    _, err := dbmap.Select(&items, "SELECT * FROM Items")
+	    if err == nil {
+		   c.JSON(200, items)
+	    } else {
+		   c.JSON(404, gin.H{"error": "Get Items Error"})
+	    }
 	})
 
 	//02
 	router.POST("/addItem", func(c *gin.Context){
-		c.String(http.StatusOK,"Add Item")
+		var itemNew Item
+		var itemOld Item
+		c.Bind(&itemNew)
+		err := dbmap.SelectOne(&itemOld, "SELECT * FROM Items WHERE Name=?", itemNew.Name)
+		c.JSON(200, err)
+		if err == nil{ // exist
+			if itemNew.Name != "" && itemNew.Amount != 0 {
+				itemNew := Item{
+					ID:        itemOld.ID,
+					Name: 	   itemOld.Name,
+					Price:     itemNew.Price,
+					Cost:      itemNew.Cost,
+					Amount:    itemOld.Amount+itemNew.Amount,
+				}
+				update, _ := dbmap.Exec(`UPDATE Items SET Price=?, Cost=?, Amount=? WHERE ID=? AND Name=?`,itemNew.Price, itemNew.Cost, itemNew.Amount, itemOld.ID, itemOld.Name); 
+				if update != nil {
+					c.JSON(200, itemNew)
+				} else {
+					checkErr(err, "Updated failed")
+				}
+			} else {
+				c.JSON(400, gin.H{"error": "Fields are empty"})
+			}
+		} else { // non-exist
+			if itemNew.Name != "" && itemNew.Amount != 0 {
+				if insert, _ := dbmap.Exec(`INSERT INTO Items (Name, Price, Cost, Amount) VALUES (?, ?, ?, ?)`, itemNew.Name, itemNew.Price, itemNew.Cost, itemNew.Amount); insert != nil {
+					item_id, err := insert.LastInsertId()
+			        if err == nil {
+				        itemNew := &Item{
+					        ID:        item_id,
+							Name: 	   itemNew.Name,
+							Price:     itemNew.Price,
+							Cost:      itemNew.Cost,
+							Amount:    itemNew.Amount,
+						}
+						c.JSON(200, itemNew)
+					} else {
+						checkErr(err, "Add Item Error")
+					}
+				}
+			} else {
+				c.JSON(400, gin.H{"error": "Fields are empty"})
+			}
+		}
 	})
+
+
+
+	
+
+
+
+
+
 
 	//03
 	router.POST("/deleteItem", func(c *gin.Context){
