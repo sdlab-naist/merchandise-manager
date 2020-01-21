@@ -72,10 +72,18 @@ POST /changePassword
 @Body {
     Username: string,
     Email: string,
-    Password: string,
+    Password: string
 }
 @Return "Response message"
 ```
 ### Submit request form
+```
+POST /requestItem
+@Body {
+    Username: string,
+    Itemname: string,
+    Amount: int
+}
+```
 ### Check request list
 ### Delete request

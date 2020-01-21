@@ -18,6 +18,14 @@ import (
     _ "github.com/go-sql-driver/mysql"
 )
 
+type Request struct {
+	ID    int64`db:"ID" json:"ID"`
+	Username string	`db:Username json:"Username"`
+	Itemname string `db:"Itemname" json:"Itemname"`
+	Amount int64 `db:"Amount" json:"Amount"`
+	Status string `db:"Status" json:"Status"`
+}
+
 type Item struct {
 	ID    int64`db:"ID" json:"ID"`
 	Name string	`db:"Name" json:"Name"`
@@ -218,7 +226,7 @@ func main() {
 	})
 
 	//06
-	router.GET("/checkOrder", func(c *gin.Context){
+	router.GET("/getOrders", func(c *gin.Context){
 		c.String(http.StatusOK,"Check Order")
 	})
 
@@ -272,14 +280,25 @@ func main() {
 		}
 	})
 
-	//07
+	// 07
 	// router.POST("/forgotPassword", func(c *gin.Context){
 	// 	c.String(http.StatusOK,"Forgot Password")
 	// })
 
 	//08
-	router.POST("/requestForm", func(c *gin.Context){
-		c.String(http.StatusOK,"Submit Request")
+	router.POST("/requestItem", func(c *gin.Context){
+		var reqNew Request
+		var reqOld Request
+		c.Bind(&reqNew)
+		err := dbmap.SelectOne(&reqOld, "SELECT * FROM Requests WHERE Itemname=? AND Username=?", reqNew.Itemname, reqOld.Username)
+		if err == nil { //exist
+			totalAmount := reqOld.Amount + reqNew.Amount
+			dbmap.Exec(`UPDATE Requests SET Amount=? WHERE Username=? AND Itemname=?`,totalAmount, reqNew.Username, reqNew.Itemname); 
+			c.JSON(200, gin.H{"error": "Your requested has already been added"})
+		} else { //non-exist
+			dbmap.Exec(`INSERT INTO Requests (Username, Itemname, Amount, Status) VALUES (?, ?, ?, ?)`, reqNew.Username, reqNew.Itemname, reqNew.Amount, "Added");
+			c.JSON(200, gin.H{"error": "Your requested has already been added"})
+		}
 	})
 
 	//09
