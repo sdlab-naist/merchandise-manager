@@ -59,6 +59,17 @@ func tempPass() string{
 	return str
 }
 
+func comparePasswords(hashedPwd string, plainPwd string) bool {
+	plainPwdZ := []byte(plainPwd)
+    byteHash := []byte(hashedPwd)
+    err := bcrypt.CompareHashAndPassword(byteHash, plainPwdZ)
+    if err != nil {
+        log.Println(err)
+        return false
+    }
+    return true
+}
+
 var dbmap = initDb()
 
 func initDb() *gorp.DbMap {
@@ -219,12 +230,16 @@ func main() {
 		err := dbmap.SelectOne(&userOld, "SELECT * FROM Users WHERE Username=?", userNew.Username)
 		if err == nil { //exist
 			correctPassword := userOld.Password
-			inputPassword := hashAndSalt(userNew.Password)
-			if correctPassword == inputPassword {
+			if comparePasswords(correctPassword,userNew.Password){
 				c.JSON(200, gin.H{"success": "Login success"})
 			} else {
 				c.JSON(400, gin.H{"error": "Incorrect password"})
 			}
+			// if correctPassword == inputPassword {
+			// 	c.JSON(200, gin.H{"success": "Login success"})
+			// } else {
+			// 	c.JSON(400, gin.H{"error": "Incorrect password"})
+			// }
 		} else {
 			c.JSON(400, gin.H{"error": "Error"})
 		}
