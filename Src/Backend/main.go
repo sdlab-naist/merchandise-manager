@@ -288,8 +288,14 @@ func main() {
 	})
 
 	//09
-	router.GET("/requestList", func(c *gin.Context){
-		c.String(http.StatusOK,"Request List")
+	router.GET("/getRequests", func(c *gin.Context){
+		var reqs []Request
+	    _, err := dbmap.Select(&reqs, "SELECT * FROM Requests")
+	    if err == nil {
+		   c.JSON(200, reqs)
+	    } else {
+		   c.JSON(404, gin.H{"error": "Get Requests Error"})
+	    }
 	})
 
 	//10

@@ -84,6 +84,7 @@ POST /requestItem
     Itemname: string,
     Amount: int
 }
+@Return "Response message"
 ```
 ### Check request list
 ### Delete request
