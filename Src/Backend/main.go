@@ -188,27 +188,13 @@ func main() {
 				c.JSON(400, gin.H{"error": itemOldAmount})
 			}
 			if itemNew.Amount < itemOld.Amount {
-				itemNew := Item{
-					ID:        itemOld.ID,
-					Name: 	   itemOld.Name,
-					Price:     itemOld.Price,
-					Cost:      itemOld.Cost,
-					Amount:    itemOld.Amount-itemNew.Amount,
-				}
-				delete, _ := dbmap.Exec(`UPDATE Items SET Price=?, Cost=?, Amount=? WHERE ID=? AND Name=?`,itemNew.Price, itemNew.Cost, itemNew.Amount, itemOld.ID, itemOld.Name); 
-				if delete != nil {
-					c.JSON(200, itemNew)
-				} else {
-					checkErr(err, "Deleted failed")
-				}
+				totalAmount := itemOld.Amount-itemNew.Amount
+				dbmap.Exec(`UPDATE Items SET Price=?, Cost=?, Amount=? WHERE ID=? AND Name=?`,itemOld.Price, itemOld.Cost, totalAmount, itemOld.ID, itemOld.Name); 
+				c.JSON(200, "The item is deleted")
 			}
 			if itemNew.Amount == itemOld.Amount {
-				delete, _ := dbmap.Exec(`DELETE FROM Items WHERE ID=? AND Name=?`, itemOld.ID, itemOld.Name); 
-				if delete != nil {
-					c.JSON(200, "The item is deleted")
-				} else {
-					checkErr(err, "Deleted failed")
-				}
+				dbmap.Exec(`DELETE FROM Items WHERE ID=? AND Name=?`, itemOld.ID, itemOld.Name); 
+				c.JSON(200, "The item is deleted")
 			}
 		} else { // non-exist
 			c.JSON(400, gin.H{"error": "The item is not existing"})
