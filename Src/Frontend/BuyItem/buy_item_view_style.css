@@ -1,8 +1,9 @@
 h1.main_title {
-    background-color:#000080;
-    color:#FFFFFF;
-    text-align :center;
+    background-color:#000080; 
+    text-align: center;
+    color:#FFFFFF 
 }
+
 p.ID {
     color: #FFFFFF;
     text-align: right;
@@ -25,4 +26,43 @@ div.input_form {
     position:absolute;
 	right:300px;
 	top:200px;
+}
+
+
+p.menu_hamburger a {
+    padding:8px 10px 8px 35px;
+    display:inline-block;
+    position:relative;
+    background-color:#333;
+    color:#fff;
+    position:absolute;
+	left:20px;
+	top:25px;
+}
+ 
+p.menu_hamburger a:before,
+p.menu_hamburger a:after {
+    content:"";
+    display:block;
+    position:absolute;
+    left:10px;
+    width:15px;
+    z-index:1;
+}
+ 
+p.menu_hamburger a:before {
+    border-top:2px solid #fff;
+    border-bottom:2px solid #fff;
+    top:-webkit-calc(50% - 6px);
+    top:-moz-calc(50% - 6px);
+    top:calc(50% - 6px);
+    height:8px;
+}
+ 
+p.menu_hamburger a:after {
+    border-top:2px solid #fff;
+    top:-webkit-calc(50% - 1px);
+    top:-moz-calc(50% - 1px);
+    top:calc(50% - 1px);
+    height:0;
 }
