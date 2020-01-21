@@ -1,15 +1,28 @@
 .container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    flex: 0 0 100px;
+}
+
+main {
+    flex: 1;
     display: flex;
 }
 
 .left {
-    width: 500px;
+    flex: 1;
+    display: flex;
 }
 
 .right {
-    flex: 1;
+    flex: 0 1 150px;
 }
 
 footer {
-    clear: both;
+    flex: 0 0 40px;
+    height: 100px;
 }
