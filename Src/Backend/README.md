@@ -87,4 +87,16 @@ POST /requestItem
 @Return "Response message"
 ```
 ### Check request list
+```
+GET /getRequests
+@Return {
+    {
+      ID:   int,  
+      Username: string,
+      Itemname: string,
+      Amount: int,
+      Status: string
+    }, . . .
+}
+```
 ### Delete request
