@@ -8,8 +8,13 @@ import (
 	"fmt"
 	"net/http"
 	"log"
+	"math/rand"
+	"time"
+	"strings"
+	"os/exec"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
     _ "github.com/go-sql-driver/mysql"
 )
 
@@ -25,6 +30,7 @@ type User struct {
 	ID    int64`db:"ID" json:"ID"`
  	Username string	`db:"Username" json:"Username"`
 	Password string `db:"Password" json:"Password"`
+	TempPassword string `db:"TempPassword" json:"TempPassword"`
 	Email string `db:"Email" json:"Email"`
 	Firstname string `db:"Firstname" json:"Firstname"`
 	Lastname string `db:"Lastname" json:"Lastname"`
@@ -37,6 +43,20 @@ type ConfigurationDB struct {
 	Host 		string
 	Port		string
 	DB_name		string
+}
+
+func tempPass() string{
+	rand.Seed(time.Now().UnixNano())
+	chars := []rune("ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ" +
+    	"abcdefghijklmnopqrstuvwxyzåäö" +
+    	"0123456789")
+	length := 8
+	var b strings.Builder
+	for i := 0; i < length; i++ {
+    	b.WriteRune(chars[rand.Intn(len(chars))])
+	}
+	str := b.String() 
+	return str
 }
 
 var dbmap = initDb()
@@ -53,6 +73,15 @@ func initDb() *gorp.DbMap {
 	checkErr(err, "sql.Open failed")
 	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.MySQLDialect{"InnoDB", "UTF8"}}
 	return dbmap
+}
+
+func hashAndSalt(pwd string) string {
+	vec := []byte(pwd)
+    hash, err := bcrypt.GenerateFromPassword(vec, bcrypt.MinCost)
+    if err != nil {
+        log.Println(err)
+    }
+    return string(hash)
 }
 
 func checkErr(err error, msg string) {
@@ -184,16 +213,42 @@ func main() {
 
 	//07
 	router.POST("/login", func(c *gin.Context){
-		c.String(http.StatusOK,"LogIn")
+		var userNew User
+		var userOld User
+		c.Bind(&userNew)
+		err := dbmap.SelectOne(&userOld, "SELECT * FROM Users WHERE Username=?", userNew.Username)
+		if err == nil { //exist
+			correctPassword := userOld.Password
+			inputPassword := hashAndSalt(userNew.Password)
+			if correctPassword == inputPassword {
+				c.JSON(200, gin.H{"success": "Login success"})
+			} else {
+				c.JSON(400, gin.H{"error": "Incorrect password"})
+			}
+		} else {
+			c.JSON(400, gin.H{"error": "Error"})
+		}
 	})
 
 	//07
-	router.POST("/register", func(c *gin.Context){
-		c.String(http.StatusOK,"Register")
+	router.POST("/registerUser", func(c *gin.Context){
+		var userNew User
+		var userOld User
+		c.Bind(&userNew)
+		err := dbmap.SelectOne(&userOld, "SELECT * FROM Users WHERE Email=?", userNew.Email)
+		if err == nil { //exist
+			c.JSON(400, gin.H{"error": "This email is already existing"})
+		} else { //non-exist
+			tempP := tempPass()
+			pazz := hashAndSalt(userNew.Password)
+			dbmap.Exec(`INSERT INTO Users (Username, Password, TempPassword, Email, Firstname, Lastname, Role) VALUES (?, ?, ?, ?, ?, ?, ?)`, userNew.Username, pazz, tempP, userNew.Email, userNew.Firstname, userNew.Lastname, userNew.Role);
+			exec.Command("sendemail", userNew.Email, "< 'Thank you for your registration.'")
+			c.JSON(200, gin.H{"success": "Register success"})
+		}
 	})
 
 	//07
-	router.POST("/forgotPassword", func(c *gin.Context){
+	router.POST("/changePassword", func(c *gin.Context){
 		c.String(http.StatusOK,"Forgot Password")
 	})
 
