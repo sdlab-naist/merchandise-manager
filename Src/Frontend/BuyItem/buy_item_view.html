@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="./buy_item_view_style.css"> 
         <title>BuyItem View</title>
         <meta charset="tuf-8"/>
+      
     </head>
 
     <body>
-        <h1>BuyItem</h1>
-        <p>UserID:○○○○</p>
-        <p>Check the item list and select the one you want to buy.</p>
+        <h1 class="main_title">BuyItem</h1>
+        <script src="./buy_item_view_main.js"></script>
+        <p class="ID">UserID:○○○○</p>
+        <p class="comment">Check the item list and select the one you want to buy.</p>
         <table border="1">
-            <tr bgcolor="skyblue">
+            <tr>
+                <td colspan="3" align="center" bgcolor=#66CCFF>Item List</td>
+            </tr>
+            <tr bgcolor=#CCFFFF>
                 <td>name</td>
                 <td>price</td>
                 <td>amount</td>
@@ -53,7 +59,13 @@
             
         </table>
 
-        <button type="button" name="name" value="value">button</button>
+        
         <button type=“button” onclick="location.href='https://www.sejuku.net'">submit</button>
+
+        <div class="input_form">
+        <p id="input_item_name">name<input type="text" name="input_item_name"></p>
+        <p id="input_item_amount">amount<input type="text" name="input_item_amount"></p>
+        </div>
+        
     </body>
 </html>
