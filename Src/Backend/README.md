@@ -44,7 +44,38 @@ POST /deleteItem
 ### Register an order
 ### Make an order
 ### Check an order
-### Submit login form
+### User registration
+```
+POST /registerUser
+@Body {
+    Username: string,
+    Password: string,
+    Firstname: string,
+    Lastname: string,
+    Role: string,
+    Email: string
+}
+@Return "Response message"
+```
+### Login
+```
+POST /login
+@Body {
+    Username: string,
+    Password: string
+}
+@Return "Response message"
+```
+### Change password
+```
+POST /changePassword
+@Body {
+    Username: string,
+    Email: string,
+    Password: string,
+}
+@Return "Response message"
+```
 ### Submit request form
 ### Check request list
 ### Delete request

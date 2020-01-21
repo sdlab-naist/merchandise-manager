@@ -235,11 +235,6 @@ func main() {
 			} else {
 				c.JSON(400, gin.H{"error": "Incorrect password"})
 			}
-			// if correctPassword == inputPassword {
-			// 	c.JSON(200, gin.H{"success": "Login success"})
-			// } else {
-			// 	c.JSON(400, gin.H{"error": "Incorrect password"})
-			// }
 		} else {
 			c.JSON(400, gin.H{"error": "Error"})
 		}
@@ -264,8 +259,23 @@ func main() {
 
 	//07
 	router.POST("/changePassword", func(c *gin.Context){
-		c.String(http.StatusOK,"Forgot Password")
+		var userNew User
+		var userOld User
+		c.Bind(&userNew)
+		err := dbmap.SelectOne(&userOld, "SELECT * FROM Users WHERE Email=?", userNew.Email)
+		if err == nil { //exist
+			pazz := hashAndSalt(userNew.Password)
+			dbmap.Exec(`UPDATE Users SET Password=? WHERE Email=? AND Username=?`,pazz , userNew.Email, userNew.Username); 
+			c.JSON(200, gin.H{"error": "Your password is updated"})
+		} else { //non-exist
+			c.JSON(400, gin.H{"error": "Incorrect information"})
+		}
 	})
+
+	//07
+	// router.POST("/forgotPassword", func(c *gin.Context){
+	// 	c.String(http.StatusOK,"Forgot Password")
+	// })
 
 	//08
 	router.POST("/requestForm", func(c *gin.Context){
