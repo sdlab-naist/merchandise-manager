@@ -1,4 +1,13 @@
 $(function() {
+    $.getJSON('http://163.221.29.46:13131/getItems', {})
+    .done(function(data) {
+        if(data) {
+            console.log(result);
+        } else {
+            console.log("error");
+        }   
+    });
+
     $('#submit').click(function() {
         var name = $('input[name="iname"]').val();
         var price = $('input[name="iprice"]').val();
