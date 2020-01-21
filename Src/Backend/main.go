@@ -21,6 +21,16 @@ type Item struct {
 	Amount int64 `db:"Amount" json:"Amount"`
 }
 
+type User struct {
+	ID    int64`db:"ID" json:"ID"`
+ 	Username string	`db:"Username" json:"Username"`
+	Password string `db:"Password" json:"Password"`
+	Email string `db:"Email" json:"Email"`
+	Firstname string `db:"Firstname" json:"Firstname"`
+	Lastname string `db:"Lastname" json:"Lastname"`
+	Role	string `db:"Role" json:"Role"`
+}
+
 type ConfigurationDB struct {
     Username    string
 	Password    string
@@ -175,6 +185,16 @@ func main() {
 	//07
 	router.POST("/login", func(c *gin.Context){
 		c.String(http.StatusOK,"LogIn")
+	})
+
+	//07
+	router.POST("/register", func(c *gin.Context){
+		c.String(http.StatusOK,"Register")
+	})
+
+	//07
+	router.POST("/forgotPassword", func(c *gin.Context){
+		c.String(http.StatusOK,"Forgot Password")
 	})
 
 	//08
