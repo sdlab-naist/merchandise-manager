@@ -2,7 +2,20 @@ $(function() {
     $.getJSON('http://163.221.29.46:13131/getItems', {})
     .done(function(data) {
         if(data) {
-            console.log(result);
+            console.log(data)
+            for(let l in data) {
+                var id = data[l]['ID']
+                var name = data[l]['Name']
+                var price = data[l]['Price']
+                var cost = data[l]['Cost']
+                var amount = data[l]['Amount']
+                $('#list_body').append("\<tr\>\<td\>" +
+                id +  "\</td\>\<td\>" +
+                name + "\</td\>\<td\>" +
+                price + "円" + "\</td\>\<td\>" +
+                cost + "円" + "\</td\>\<td\>" +
+                amount + "個" + "\</td\>\</tr\>")
+            }
         } else {
             console.log("error");
         }   

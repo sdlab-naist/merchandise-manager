@@ -14,12 +14,12 @@ main {
 }
 
 .left {
-    flex: 1;
+    flex: 1 500px;
     display: flex;
 }
 
 .right {
-    flex: 0 1 150px;
+    flex: 0 1 300px;
 }
 
 footer {
