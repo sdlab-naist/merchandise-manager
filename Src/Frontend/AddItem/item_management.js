@@ -1,4 +1,5 @@
 $(function() {
+
     $.getJSON('http://163.221.29.46:13131/getItems', {})
     .done(function(data) {
         if(data) {
@@ -19,6 +20,26 @@ $(function() {
         } else {
             console.log("error");
         }   
+    });
+
+    $(function () {
+        $('#navbar-button').click(function() {
+            console.log(over_flg)
+           //$('#navcontents').slideToggle('fast');
+            $('#navbarSupportedContent').collapse('toggle');
+        });
+
+        $('header, ul').hover(function() {
+            over_flg = true;
+        }, function() {
+            over_flg = false;
+        });
+
+        $('body').click(function() {
+            if(over_flg == false) {
+                $('#navbarSupportedContent').collapse('hide')
+            }
+        });
     });
 
     $('#submit').click(function() {

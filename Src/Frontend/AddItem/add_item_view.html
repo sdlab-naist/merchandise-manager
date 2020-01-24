@@ -2,14 +2,56 @@
 <html lang="ja">
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="add_item.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="item_management.js"></script>
+        <link rel="stylesheet" href="add_item.css">
         <title>Add Item</title>
     </head>
     <body>
-        <p>Add Item</p>
         <div class="container">
+            <header>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+                    <a class="navbar-brand" href="#">Merchandise-Manager</a>
+                    <button class="navbar-toggler" type="button" id="navbar-button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                      
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                      <ul class="navbar-nav" id="navcontents">
+                        <li class="nav-item active">
+                          <a class="nav-link" href="add_item_view.html">Add Item <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">Delete Item</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">Buy</a>
+                        </li>
+                        <!-- ドロップダウンタイプ -->
+                        <!--li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown link
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                          </div>
+                        </li-->
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">Request</a>
+                        </li>
+                        <!--li class="nav-item">
+                          <a class="nav-link" href="#">Contact</a>
+                        </li-->
+                      </ul>
+                    </div>
+                  </nav>
+            </header>
+            <p>Add Item</p>
             <main>
                 <div class="left">
                     <table class="item_list">
@@ -51,7 +93,7 @@
                             <input type="number" id="item_amount" name="iamount">
                         </div>
                         <div>
-                            <input id="submit" type="button" value="Add">
+                            <input id="submit" type="button" class="btn btn-primary" value="Add">
                         </div>
                     </form>
                 </div>
