@@ -181,7 +181,7 @@ func main() {
 		var itemNew Item
 		var itemOld Item
 		c.Bind(&itemNew)
-		err := dbmap.SelectOne(&itemOld, "SELECT * FROM Items WHERE Name=?", itemNew.Name)
+		err := dbmap.SelectOne(&itemOld, "SELECT * FROM Items WHERE ID=?", itemNew.ID)
 		if err == nil{ // exist
 			if itemNew.Amount > itemOld.Amount {
 				itemOldAmount := fmt.Sprintf("The number of existing item is %d",itemOld.Amount)
@@ -189,11 +189,11 @@ func main() {
 			}
 			if itemNew.Amount < itemOld.Amount {
 				totalAmount := itemOld.Amount-itemNew.Amount
-				dbmap.Exec(`UPDATE Items SET Price=?, Cost=?, Amount=? WHERE ID=? AND Name=?`,itemOld.Price, itemOld.Cost, totalAmount, itemOld.ID, itemOld.Name); 
+				dbmap.Exec(`UPDATE Items SET Price=?, Cost=?, Amount=? WHERE ID=?`,itemOld.Price, itemOld.Cost, totalAmount, itemOld.ID); 
 				c.JSON(200, "The item is deleted")
 			}
 			if itemNew.Amount == itemOld.Amount {
-				dbmap.Exec(`DELETE FROM Items WHERE ID=? AND Name=?`, itemOld.ID, itemOld.Name); 
+				dbmap.Exec(`DELETE FROM Items WHERE ID=?`, itemOld.ID); 
 				c.JSON(200, "The item is deleted")
 			}
 		} else { // non-exist
