@@ -4,6 +4,31 @@
         <link rel="stylesheet" href="./buy_item_view_style.css"> 
         <title>BuyItem View</title>
         <meta charset="tuf-8"/>
+        <!-- ハンバーガーアイコン -->
+        <div id="nav-drawer">
+            <!--チェックボックス.　常に表示-->
+            <input id="nav-input" type="checkbox" class="nav-unshown">
+            <!--チェックボックスのラベル．ここでハンバーガーアイコンを表示タップにより，inputがチェック状態になる-->
+            <label id="nav-open" for="nav-input"><span></span></label>
+            <!--チェックボックスのラベル2．初めは非表示
+            inputがチェック状態になると薄黒のカバーとして表示
+            タップによって，inputのチェック解除-->
+            <label class="nav-unshown" id="nav-close" for="nav-input"></label>
+            <!--表示される中身
+            inputのチェックの有無に連動して「表示」と「非表示」を切り替える-->
+            <div id="nav-content">
+                <!-- ここに中身を入れる -->
+                <ul>
+                    <li><a class="active" href="#home">Home</a></li>
+                    <li><a href="#AddItem">AddItem</a></li>
+                    <li><a href="#DeleteItem">DeleteItem</a></li>
+                    <li><a href="#BuyItem">BuyItem</a></li>
+                    <li><a href="#RequestItem">RequestItem</a></li>
+                    <li><a href="#PaymentItemView">PaymentItemView</a></li>
+                    <li><a href="#Login">Login</a></li>
+                </ul>
+            </div>
+        </div>
       
     </head>
 
@@ -67,7 +92,7 @@
         <p id="input_item_amount">amount<input type="text" name="input_item_amount"></p>
         </div>
 
-        <p class="menu_hamburger"><a href="#">MENU</a></p>
+        <!-- <p class="menu_hamburger"><a href="#">MENU</a></p> -->
 
 
     </body>
