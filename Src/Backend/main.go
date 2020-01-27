@@ -280,10 +280,10 @@ func main() {
 		if err == nil { //exist
 			totalAmount := reqOld.Amount + reqNew.Amount
 			dbmap.Exec(`UPDATE Requests SET Amount=? WHERE Username=? AND Itemname=?`,totalAmount, reqNew.Username, reqNew.Itemname); 
-			c.JSON(200, gin.H{"error": "Your requested has already been added"})
+			c.JSON(200, gin.H{"success": "Your requested has already been added"})
 		} else { //non-exist
 			dbmap.Exec(`INSERT INTO Requests (Username, Itemname, Amount, Status) VALUES (?, ?, ?, ?)`, reqNew.Username, reqNew.Itemname, reqNew.Amount, "Added");
-			c.JSON(200, gin.H{"error": "Your requested has already been added"})
+			c.JSON(200, gin.H{"success": "Your requested has already been added"})
 		}
 	})
 
@@ -299,8 +299,17 @@ func main() {
 	})
 
 	//10
-	router.DELETE("/deleteRequest", func(c *gin.Context){
-		c.String(http.StatusOK,"Delete Request")
+	router.POST("/deleteRequest", func(c *gin.Context){
+		var reqNew Request
+		var reqOld Request
+		c.Bind(&reqNew)
+		err := dbmap.SelectOne(&reqOld, "SELECT * FROM Requests WHERE ID=?", reqNew.ID)
+		if err == nil{ // exist
+			dbmap.Exec(`UPDATE Requests SET Status=? WHERE ID=?`,"Deleted",reqNew.ID); 
+			c.JSON(200, gin.H{"success": "Your requested has already been deleted"})
+		} else { // non-exist
+			c.JSON(400, gin.H{"error": "The request is not existing"})
+		}
 	})
 
 	router.Run(":13131")

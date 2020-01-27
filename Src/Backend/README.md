@@ -36,12 +36,12 @@ POST /addItem
 ```
 POST /deleteItem
 @Body {
-    Name: string,
-    Amount: int
+    ID: int,
 }
 @Return "Response message"
 ```
-### Register an order
+### Register new order
+### Update existing order
 ### Make an order
 ### Check an order
 ### User registration
@@ -100,3 +100,10 @@ GET /getRequests
 }
 ```
 ### Delete request
+```
+POST /deleteRequest
+@Body {
+    ID: int,
+}
+@Return "Response message"
+```
