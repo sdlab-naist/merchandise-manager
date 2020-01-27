@@ -60,16 +60,17 @@ $(function() {
     $('#submit').click(function() {
         var name = $('input[name="iname"]').val();
         console.log(name)
-        var amount = $('input[name="iamount"]').val();
+        var amount = parseInt($('input[name="iamount"]').val());
+        console.log(typeof(amount))
         
         $.post('http://163.221.29.46:13131/deleteItem', {
             Name: name,
-            amount: amount
+            Amount: amount
         })
         .done(function(data) {
             console.log(data)
             $('#result').replaceWith('<div id="result"></div>')
-            $('#result').append("\<div\>Deleted Item\</div\>\<table\>\<thead\>\<tr\>\<th\>name\</th\>\<th\>price\</th\>\<th\>cost\</th\>\<th\>amont\</th\>\</tr\>\</thead\>\<tbody\>\<tr\>\<td\>" + 
+            $('#result').append("\<div\>Deleted Item\</div\>\<table\>\<thead\>\<tr\>\<th\>name\</th\>\<th\>amount\</th\>\</tr\>\</thead\>\<tbody\>\<tr\>\<td\>" + 
             name + "\</td\>\<td\>" +
             amount + "個" + "\</td\>\</tr\>\</tbody\>\</table\>")
             })
