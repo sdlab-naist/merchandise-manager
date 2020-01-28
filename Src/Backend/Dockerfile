@@ -55,7 +55,7 @@ RUN go get -u github.com/go-sql-driver/mysql
 # RUN go run ./Src/Backend/main.go
 RUN pwd
 RUN ls
-CMD["./main"]
+CMD ["/bin/sh", "-c", "./main"]
 
 # FROM alpine:latest
 
