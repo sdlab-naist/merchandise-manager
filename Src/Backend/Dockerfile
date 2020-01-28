@@ -45,17 +45,18 @@ WORKDIR /api
 # RUN go mod download
 
 COPY . .
-RUN go build -o ./app ./Src/Backend/main.go
+RUN go version
+# RUN go build -o ./app ./Src/Backend/main.go
 
-FROM alpine:latest
+# FROM alpine:latest
 
-RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
+# RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
-RUN mkdir -p /api
-WORKDIR /api
-COPY --from=builder /api/app .
-COPY --from=builder /api/test.db .
+# RUN mkdir -p /api
+# WORKDIR /api
+# COPY --from=builder /api/app .
+# COPY --from=builder /api/test.db .
 
-EXPOSE 8080
+# EXPOSE 8080
 
-ENTRYPOINT ["./app"]
+# ENTRYPOINT ["./app"]
