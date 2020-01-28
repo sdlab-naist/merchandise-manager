@@ -17,7 +17,7 @@ $(function() {
                 price + "円" + "\</td\>\<td\>" +
                 cost + "円" + "\</td\>\<td\>" +
                 amount + "個" + "\</td\>" + 
-                "\<td>\<input id=" + id + " type=\"button\" class=\"btn btn-primary select\" value=\"Select\"\>\</td>\</tr\>")
+                "\<td>\<input id=" + id + " type=\"button\" class=\"btn btn-default select\" value=\"Select\"\>\</td>\</tr\>")
             }
         } else {
             console.log("error");
@@ -45,11 +45,12 @@ $(function() {
         });
     });
 
+    var id
     $(document).on('click','.select', function() {
         console.log($(this).attr('id'))
         for (l in itemlist) {
             if (itemlist[l]['ID'] == $(this).attr('id')){
-                var id = itemlist[l]['ID']
+                id = itemlist[l]['ID']
                 var name = itemlist[l]['Name']
                 $('#item_name').val(name)
                 break
@@ -64,7 +65,7 @@ $(function() {
         console.log(typeof(amount))
         
         $.post('http://163.221.29.46:13131/deleteItem', {
-            Name: name,
+            ID: id,
             Amount: amount
         })
         .done(function(data) {
