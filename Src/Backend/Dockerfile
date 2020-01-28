@@ -37,8 +37,7 @@ FROM golang:${GO_VERSION}-alpine AS builder
 
 RUN apk update && apk add alpine-sdk git && rm -rf /var/cache/apk/*
 
-RUN mkdir -p /api
-WORKDIR /api
+# RUN mkdir -p /api
 
 EXPOSE 13131
 # COPY go.mod .
@@ -46,6 +45,7 @@ EXPOSE 13131
 # RUN go mod download
 
 COPY . .
+WORKDIR ./Src/Backend/
 RUN go version
 RUN go get -u github.com/gin-contrib/cors
 RUN go get -u github.com/gin-gonic/gin
