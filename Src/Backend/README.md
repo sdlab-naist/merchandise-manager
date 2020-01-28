@@ -42,7 +42,7 @@ POST /deleteItem
 ```
 ### Register an order
 ```
-POST /registOrder
+POST /registerOrder
 @Body {
     OrderID: string (optional),
     ItemID: string,
