@@ -16,18 +16,46 @@
 
 # CMD ["/bin/sh", "-c", "cd /mnt/merchandise-manager/Src/Backend; go run main.go;"]
 
-FROM golang:1.10.2-alpine3.7
+# FROM golang:1.10.2-alpine3.7
 
-EXPOSE 13131
+# EXPOSE 13131
 
-COPY . /mnt
+# COPY . /mnt
 
-WORKDIR /mnt/Src/Backend/
+# WORKDIR /mnt/Src/Backend/
 
-RUN apk update \
-  && apk add --no-cache git \
-  && go get -u github.com/codegangsta/gin \
-  && go get -u github.com/golang/dep/cmd/dep \
-  && dep ensure
+# RUN apk update \
+#   && apk add --no-cache git \
+#   && go get -u github.com/codegangsta/gin \
+#   && go get -u github.com/golang/dep/cmd/dep \
+#   && dep ensure
 
-CMD go run main.go
+# CMD go run main.go
+ARG GO_VERSION=1.11
+
+FROM golang:${GO_VERSION}-alpine AS builder
+
+RUN apk update && apk add alpine-sdk git && rm -rf /var/cache/apk/*
+
+RUN mkdir -p /api
+WORKDIR /api
+
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
+
+COPY . .
+RUN go build -o ./app ./src/main.go
+
+FROM alpine:latest
+
+RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
+
+RUN mkdir -p /api
+WORKDIR /api
+COPY --from=builder /api/app .
+COPY --from=builder /api/test.db .
+
+EXPOSE 8080
+
+ENTRYPOINT ["./app"]

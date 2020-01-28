@@ -210,7 +210,7 @@ func main() {
 	})
 
 	//04
-	router.POST("/registOrder", func(c *gin.Context){ // add
+	router.POST("/registerOrder", func(c *gin.Context){ // add
 		var ordNew Order
 		var ordOld Order
 		c.Bind(&ordNew)
@@ -218,10 +218,10 @@ func main() {
 		if err != nil { // non-exist
 			ordID := tempPass()
 			dbmap.Exec(`INSERT INTO Orders (OrderID, ItemID, Amount) VALUES (?, ?, ?)`, ordID, ordNew.ItemID, ordNew.Amount)
-			c.JSON(200, "The order "+ordID+" is registered")
+			c.JSON(200, ordID)
 		} else { // exist
 			dbmap.Exec(`INSERT INTO Orders (OrderID, ItemID, Amount) VALUES (?, ?, ?)`, ordNew.OrderID, ordNew.ItemID, ordNew.Amount)
-			c.JSON(200, "The order "+ordNew.OrderID+" is updated")
+			c.JSON(200, ordNew.OrderID)
 		}
 	})
 
