@@ -133,6 +133,7 @@ func main() {
 		var itemNew Item
 		var itemOld Item
 		c.Bind(&itemNew)
+		fmt.Println(itemNew.Name)
 		err := dbmap.SelectOne(&itemOld, "SELECT * FROM Items WHERE Name=?", itemNew.Name)
 		if err == nil{ // exist
 			if itemNew.Name != "" && itemNew.Amount != 0 {
