@@ -55,8 +55,7 @@ RUN go get -u github.com/go-sql-driver/mysql
 # RUN go run ./Src/Backend/main.go
 RUN pwd
 RUN ls
-RUN go build -o ./Src/Backend/main.tem ./Src/Backend/main.go
-WORKDIR ./Src/Backend/
+RUN ./main
 
 # FROM alpine:latest
 
