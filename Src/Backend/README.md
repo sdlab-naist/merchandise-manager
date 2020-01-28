@@ -42,17 +42,22 @@ POST /deleteItem
 ```
 ### Register an order
 ```
-GET /addOrder
+POST /registOrder
 @Body {
-    {
-      OrderID: string (optional),
-      ItemID: string,
-      Amount: int
-    }, . . .
+    OrderID: string (optional),
+    ItemID: string,
+    Amount: int
 }
 @Return "Response message"
 ```
 ### Make an order
+```
+POST /makeOrder
+@Body {
+    OrderID: string,
+}
+@Return "Response message"
+```
 ### Check an order
 ```
 GET /getOrder

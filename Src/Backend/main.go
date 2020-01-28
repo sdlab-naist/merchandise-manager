@@ -227,7 +227,16 @@ func main() {
 
 	//05
 	router.POST("/makeOrder", func(c *gin.Context){ // delete
-		c.String(http.StatusOK,"Make Order")
+		var ordNew Order
+		var ordOld Order
+		c.Bind(&ordNew)
+		err := dbmap.SelectOne(&ordOld, `SELECT * FROM Orders WHERE OrderID=?`, ordNew.OrderID); 
+		if err != nil {
+			c.String(http.StatusOK,"Make Order (OrderID:"+ordNew.OrderID+") failed")
+		} else {
+			dbmap.Exec(`DELETE FROM Orders WHERE OrderID=?`, ordNew.OrderID); 
+			c.String(http.StatusOK,"Make Order (OrderID:"+ordNew.OrderID+") success")
+		}
 	})
 
 	//06
