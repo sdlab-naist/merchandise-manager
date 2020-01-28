@@ -214,14 +214,14 @@ func main() {
 		var ordNew Order
 		var ordOld Order
 		c.Bind(&ordNew)
-		err := dbmap.SelectOne(&ordOld, "SELECT * FROM Orders WHERE OrderID=?", ordNew.OrderID)
-		if err != nil { // non-exist
+		dbmap.SelectOne(&ordOld, "SELECT * FROM Orders WHERE OrderID=?", ordNew.OrderID)
+		if len(ordNew.OrderID) == 0 { // non-exist
 			ordID := tempPass()
 			dbmap.Exec(`INSERT INTO Orders (OrderID, ItemID, Amount) VALUES (?, ?, ?)`, ordID, ordNew.ItemID, ordNew.Amount)
 			c.JSON(200, ordID)
 		} else { // exist
 			dbmap.Exec(`INSERT INTO Orders (OrderID, ItemID, Amount) VALUES (?, ?, ?)`, ordNew.OrderID, ordNew.ItemID, ordNew.Amount)
-			c.JSON(200, ordNew.OrderID)
+			c.JSON(200,  ordNew.OrderID)
 		}
 	})
 

@@ -40,22 +40,29 @@ RUN apk update && apk add alpine-sdk git && rm -rf /var/cache/apk/*
 RUN mkdir -p /api
 WORKDIR /api
 
-COPY go.mod .
-COPY go.sum .
-RUN go mod download
+EXPOSE 13131
+# COPY go.mod .
+# COPY go.sum .
+# RUN go mod download
 
 COPY . .
-RUN go build -o ./app ./src/main.go
+RUN go version
+RUN go get -u github.com/gin-contrib/cors
+RUN go get -u github.com/gin-gonic/gin
+RUN go get -u golang.org/x/crypto/bcrypt
+RUN go get -u github.com/go-sql-driver/mysql
 
-FROM alpine:latest
+# RUN go build -o ./app ./Src/Backend/main.go
 
-RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
+# FROM alpine:latest
 
-RUN mkdir -p /api
-WORKDIR /api
-COPY --from=builder /api/app .
-COPY --from=builder /api/test.db .
+# RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
-EXPOSE 8080
+# RUN mkdir -p /api
+# WORKDIR /api
+# COPY --from=builder /api/app .
+# COPY --from=builder /api/test.db .
 
-ENTRYPOINT ["./app"]
+# EXPOSE 8080
+
+# ENTRYPOINT ["./app"]
