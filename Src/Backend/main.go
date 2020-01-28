@@ -211,7 +211,6 @@ func main() {
 
 	//04
 	router.POST("/registerOrder", func(c *gin.Context){
-		c.String(http.StatusOK,"Register Order")
 	})
 
 	//05
@@ -221,7 +220,13 @@ func main() {
 
 	//06
 	router.GET("/getOrders", func(c *gin.Context){
-		c.String(http.StatusOK,"Check Order")
+		var ords []Order
+	    _, err := dbmap.Select(&ords, "SELECT * FROM Orders")
+	    if err == nil {
+		   c.JSON(200, ords)
+	    } else {
+		   c.JSON(404, gin.H{"error": "Get Orders Error"})
+	    }
 	})
 
 	//07
