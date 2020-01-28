@@ -210,16 +210,28 @@ func main() {
 	})
 
 	//04
-	router.POST("/registerOrder", func(c *gin.Context){
+	router.POST("/registOrder", func(c *gin.Context){ // add
+		var ordNew Order
+		var ordOld Order
+		c.Bind(&ordNew)
+		err := dbmap.SelectOne(&ordOld, "SELECT * FROM Orders WHERE OrderID=?", ordNew.OrderID)
+		if err != nil { // non-exist
+			ordID := tempPass()
+			dbmap.Exec(`INSERT INTO Orders (OrderID, ItemID, Amount) VALUES (?, ?, ?)`, ordID, ordNew.ItemID, ordNew.Amount)
+			c.JSON(200, "The order "+ordID+" is registered")
+		} else { // exist
+			dbmap.Exec(`INSERT INTO Orders (OrderID, ItemID, Amount) VALUES (?, ?, ?)`, ordNew.OrderID, ordNew.ItemID, ordNew.Amount)
+			c.JSON(200, "The order "+ordNew.OrderID+" is updated")
+		}
 	})
 
 	//05
-	router.POST("/makeOrder", func(c *gin.Context){
+	router.POST("/makeOrder", func(c *gin.Context){ // delete
 		c.String(http.StatusOK,"Make Order")
 	})
 
 	//06
-	router.GET("/getOrders", func(c *gin.Context){
+	router.GET("/getOrders", func(c *gin.Context){ // list
 		var ords []Order
 	    _, err := dbmap.Select(&ords, "SELECT * FROM Orders")
 	    if err == nil {

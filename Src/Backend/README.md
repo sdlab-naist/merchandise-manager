@@ -40,10 +40,31 @@ POST /deleteItem
 }
 @Return "Response message"
 ```
-### Register new order
-### Update existing order
+### Register an order
+```
+GET /addOrder
+@Body {
+    {
+      OrderID: string (optional),
+      ItemID: string,
+      Amount: int
+    }, . . .
+}
+@Return "Response message"
+```
 ### Make an order
 ### Check an order
+```
+GET /getOrder
+@Return {
+    {
+      ID:   int,  
+      OrderID: string,
+      ItemID: string,
+      Amount: int
+    }, . . .
+}
+```
 ### User registration
 ```
 POST /registerUser
