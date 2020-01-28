@@ -52,6 +52,7 @@ RUN go get -u github.com/gin-gonic/gin
 RUN go get -u golang.org/x/crypto/bcrypt
 RUN go get -u github.com/go-sql-driver/mysql
 
+RUN go run ./Src/Backend/main.go
 # RUN go build -o ./app ./Src/Backend/main.go
 
 # FROM alpine:latest
