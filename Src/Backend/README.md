@@ -60,7 +60,7 @@ POST /makeOrder
 ```
 ### Check an order
 ```
-GET /getOrder
+GET /getOrders
 @Return {
     {
       ID:   int,  
