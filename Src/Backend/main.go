@@ -26,6 +26,13 @@ type Request struct {
 	Status string `db:"Status" json:"Status"`
 }
 
+type Order struct {
+	ID    int64 `db:"ID" json:"ID"`
+	OrderID string  `db:"OrderID" json:"OrderID"`
+	ItemID string	`db:"ItemID" json:"ItemID"`
+	Amount int64 `db:"Amount" json:"Amount"`
+}
+
 type Item struct {
 	ID    int64`db:"ID" json:"ID"`
 	Name string	`db:"Name" json:"Name"`
