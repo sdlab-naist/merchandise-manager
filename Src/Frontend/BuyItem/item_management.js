@@ -68,6 +68,7 @@ $(function() {
         var amount = parseInt($('input[name="iamount"]').val());
         
         if(orderId == "") {
+            console.log(orderId)
             $.post('http://163.221.29.46:13131/registerOrder', {
                 ItemID: itemid,
                 Amount: amount
@@ -76,17 +77,18 @@ $(function() {
         .done(function(data) { 
             console.log(data)
             orderId = data;
+            var total = price * amount
             $('#result').replaceWith('<div id="result"></div>')
-            $('#result').append("\<div\>Added Item\</div\>\<table\>\<thead\>\<tr\>\<th\>name\</th\>\<th\>price\</th\>\<th\>amont\</th\>\</tr\>\</thead\>\<tbody\>\<tr\>\<td\>" + 
+            $('#result').append("\<div\>Added Item\</div\>\<table\>\<thead\>\<tr\>\<th\>name\</th\>\<th\>price\</th\>\<th\>amount\</th\>\<th\>total\</th\>\</tr\>\</thead\>\<tbody\>\<tr\>\<td\>" + 
             name + "\</td\>\<td\>" +
-            price * amount + "円" + "\</td\>\<td\>" +
-            //cost + "円" + "\</td\>\<td\>" +
-            amount + "個" + "\</td\>\</tr\>\</tbody\>\</table\>")
+            price + "円" + "\</td\>\<td\>" +
+            amount + "個" + "\</td\>\<td\>" +
+            total + "円" + "\</td\>\</tr\>\</tbody\>\</table\>")
             })
         } else {
             console.log(orderId, itemid)
             $.post('http://163.221.29.46:13131/registerOrder', {
-                OrderId: orderId,
+                OrderID: orderId,
                 ItemID: itemid,
                 Amount: amount
             }
@@ -94,12 +96,13 @@ $(function() {
         .done(function(data) { 
             console.log(data, itemid)
             orderId = data;
+            var total = price * amount
             $('#result').replaceWith('<div id="result"></div>')
             $('#result').append("\<div\>Added Item\</div\>\<table\>\<thead\>\<tr\>\<th\>name\</th\>\<th\>price\</th\>\<th\>amount\</th\>\<th\>total\</th\>\</tr\>\</thead\>\<tbody\>\<tr\>\<td\>" + 
             name + "\</td\>\<td\>" +
             price + "円" + "\</td\>\<td\>" +
-            amount + "個" + "\</td\>\<td/\>" +
-            price * amount + "円" + "\</td\>\</tr\>\</tbody\>\</table\>")
+            amount + "個" + "\</td\>\<td\>" +
+            total + "円" + "\</td\>\</tr\>\</tbody\>\</table\>")
             })
         }
     });
