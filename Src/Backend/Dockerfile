@@ -52,7 +52,7 @@ RUN go get -u github.com/gin-gonic/gin
 RUN go get -u golang.org/x/crypto/bcrypt
 RUN go get -u github.com/go-sql-driver/mysql
 
-RUN go run ./Src/Backend/main.go
+# RUN go run ./Src/Backend/main.go
 RUN go build -o ./Src/Backend/main.tem ./Src/Backend/main.go
 WORKDIR ./Src/Backend/
 RUN pwd
