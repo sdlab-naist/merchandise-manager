@@ -38,22 +38,24 @@ table{
 }
 
 table th:first-child{
-    border-radius: 5px 0 0 0;
+    /*border-radius: 0px 0 0 0;*/
 }
 
 table th:last-child{
-    border-radius: 0 5px 0 0;
+    /*border-radius: 0 0px 0 0;*/
     border-right: 1px solid #336666;
 }
 
 table th{
     text-align: center;
     color:white;
-    background: linear-gradient(#82bc9a,#1b7c5f);
+    font-weight: lighter;
+    /*background: linear-gradient(#82bc9a,#1b7c5f);*/
+    background: #82bc9a;
     border-left: 1px solid #336666;
     border-top: 1px solid #336666;
     border-bottom: 1px solid #336666;
-    box-shadow: 0px 1px 1px rgba(50, 139, 88, 0.3) inset;
+    /*box-shadow: 0px 1px 1px rgba(50, 139, 88, 0.3) inset;*/
     width: 25%;
     padding: 10px 0;
     width: auto !important;
@@ -64,7 +66,7 @@ table td{
     border-left: 1px solid #a8b7c5;
     border-bottom: 1px solid #a8b7c5;
     border-top:none;
-    box-shadow: 0px -3px 5px 1px #eee inset;
+    /*box-shadow: 0px -3px 5px 1px #eee inset;*/
     width:25%;
     padding: 10px 0;
     width: auto !important;
@@ -102,43 +104,47 @@ ul li a{
     padding: 10px 0;
     text-decoration: none;
     color: #555;
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 ul li.current{
     background-color: #DEEBF7;
 }
 
-ul li.current a{
+/*ul li.current a{
     color: #555;
-}
+}*/
 
-ul li:hover{
+/*ul li:hover{
     background-color: #FFF2CC;
-}
+}*/
 
 /*formのデザイン*/
 label#name, label#price, label#cost, label#amount {
-    width: 70px;
+    width: 80px;
+    height: 27px;
     text-align: center;
     color:white;
-    background: linear-gradient(#82bcab,#337079);
-    border-left: 1px solid #336666;
+    /*(background: linear-gradient(#82bcab,#337079);*/
+    background: #82bcab;
+    /*border-left: 1px solid #336666;
     border-top: 1px solid #336666;
-    border-bottom: 1px solid #336666;
-    box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;
+    border-bottom: 1px solid #336666;*/
+    /*box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;*/
     border-radius: 5px; 
 }
 
 input#submit {
-    width: 70px;
+    width: 100px;
     text-align: center;
     color:white;
-    background: linear-gradient(#82bcab,#337079);
-    border-left: 1px solid #336666;
-    border-top: 1px solid #336666;
-    border-bottom: 1px solid #336666;
-    box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;
+    /*background: linear-gradient(#82bcab,#337079);*/
+    background: #337079;
+    border-left: 0px solid #336666;
+    border-right: 0px solid #336666;
+    border-top: 0px solid #336666;
+    border-bottom: 0px solid #336666;
+    /*box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;*/
 }
 
 /* headerのデザイン */
@@ -146,7 +152,7 @@ header {
     height: 100px;
     width: 100%;
     padding: 15px 0;
-    background-color: #337079;
+    /*background-color: #337079;*/
     color: white;
 }
 header .headline{
@@ -168,7 +174,7 @@ header .headline{
 }
 
 a.navbar-brand {
-    font-weight: 1000;
+    font-weight: 100;
     font-size: 30px;
 }
 
