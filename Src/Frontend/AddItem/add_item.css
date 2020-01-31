@@ -24,8 +24,8 @@ main {
 }
 
 footer {
-    flex: 0 0 40px;
-    height: 100px;
+    flex: 0 0 100px;
+    height: 400px;
 }
 
 
@@ -38,23 +38,23 @@ table{
 }
 
 table th:first-child{
-    /*border-radius: 0px 0 0 0;*/
+    border-radius: 0px 0px 0px 0px;
 }
 
 table th:last-child{
-    /*border-radius: 0 0px 0 0;*/
-    border-right: 1px solid #336666;
+    border-radius: 0px 0px 0px 0px;
+    border-right: 0px solid #336666;
 }
 
 table th{
     text-align: center;
     color:white;
-    font-weight: lighter;
+    font-weight: normal;
     /*background: linear-gradient(#82bc9a,#1b7c5f);*/
     background: #82bc9a;
-    border-left: 1px solid #336666;
-    border-top: 1px solid #336666;
-    border-bottom: 1px solid #336666;
+    border-left: 0px solid #336666;
+    border-top: 0px solid #336666;
+    border-bottom: 0px solid #336666;
     /*box-shadow: 0px 1px 1px rgba(50, 139, 88, 0.3) inset;*/
     width: 25%;
     padding: 10px 0;
@@ -63,8 +63,8 @@ table th{
 
 table td{
     text-align: center;
-    border-left: 1px solid #a8b7c5;
-    border-bottom: 1px solid #a8b7c5;
+    border-left: thin solid #a8b7c5;
+    border-bottom: thin solid #a8b7c5;
     border-top:none;
     /*box-shadow: 0px -3px 5px 1px #eee inset;*/
     width:25%;
@@ -77,11 +77,11 @@ table td:last-child{
 }
 
 table tr:last-child td:first-child {
-    border-radius: 0 0 0 5px;
+    border-radius: 0 0 0 0;
 }
 
 table tr:last-child td:last-child {
-    border-radius: 0 0 5px 0;
+    border-radius: 0 0 0 0;
 } */
 
 /*メニューバーのデザイン*/
@@ -179,8 +179,9 @@ a.navbar-brand {
 }
 
 /* コメントの文字サイズ */
-p.comment {
-    font-size: 50;
+p.title {
+    font-weight: lighter;
+    font-size: 20px;
 }
 /* セル幅を自動調整 */
 /* table, th, td {
