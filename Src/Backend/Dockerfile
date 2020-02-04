@@ -19,6 +19,8 @@ RUN go get -u github.com/go-sql-driver/mysql
 
 RUN pwd
 RUN ls
+ADD default.conf /etc/nginx/conf.d/default.conf
 CMD ["/bin/sh", "-c", "./main"]
 
-ADD default.conf /etc/nginx/conf.d/default.conf
+
+CMD nginx -g "daemon off;"
