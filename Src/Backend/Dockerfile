@@ -7,7 +7,7 @@ RUN apk update && apk add alpine-sdk git nginx && rm -rf /var/cache/apk/*
 # Backend port
 EXPOSE 13131
 # Frontend port
-EXPOSE 80
+#EXPOSE 80
 
 COPY . .
 WORKDIR ./Src/Backend/
@@ -19,8 +19,6 @@ RUN go get -u github.com/go-sql-driver/mysql
 
 RUN pwd
 RUN ls
-ADD default.conf /etc/nginx/conf.d/default.conf
-CMD ["/bin/sh", "-c", "./main"]
-
-
-CMD nginx -g "daemon off;"
+#ADD default.conf /etc/nginx/conf.d/default.conf
+#CMD ["/bin/sh", "-c", "./main"]
+#CMD nginx -g "daemon off;"
