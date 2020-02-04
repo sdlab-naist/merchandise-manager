@@ -2,12 +2,12 @@ ARG GO_VERSION=1.11
 
 FROM golang:${GO_VERSION}-alpine AS builder
 
-RUN apk update && apk add alpine-sdk git && rm -rf /var/cache/apk/*
+RUN apk update && apk add alpine-sdk git nginx && rm -rf /var/cache/apk/*
 
 # Backend port
 EXPOSE 13131
 # Frontend port
-EXPOSE 13132
+EXPOSE 80
 
 COPY . .
 WORKDIR ./Src/Backend/
@@ -20,3 +20,5 @@ RUN go get -u github.com/go-sql-driver/mysql
 RUN pwd
 RUN ls
 CMD ["/bin/sh", "-c", "./main"]
+
+ADD default.conf /etc/nginx/conf.d/default.conf
