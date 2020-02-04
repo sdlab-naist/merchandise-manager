@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="login_management.js"></script>
-        <link rel="stylesheet" href="login.css">
-        <title>Login</title>
+        <script type="text/javascript" src="register_account.js"></script>
+        <link rel="stylesheet" href="register_account.css">
+        <title>Register Account</title>
     </head>
     <body>
         <div class="container">
@@ -37,7 +37,7 @@
                     </div-->
                 </nav>
             </header>
-            <p>Login</p>
+            <p>Register Account</p>
             <main>
                 <form>
                     <div>
@@ -49,9 +49,22 @@
                         <input type="password" id="pwd" name="password">
                     </div>
                     <div>
-                        <input id="submit" type="button" class="btn btn-primary" value="Login">
+                        <label id="firstname" for="fname">First Name</label>
+                        <input type="text" id="fname" name="fname">
                     </div>
-                    <a href="../RegisterAccount/register_account_view.html">Register new Account</a>
+                    <div>
+                        <label id="lastname" for="lname">Last Name</label>
+                        <input type="text" id="lname" name="lname">
+                    </div>
+                    <div>
+                        <label id="e-mail" for="email">E-mail</label>
+                        <input type="text" id="email" name="email">
+                    </div>
+                    <div>
+                        <input id="submit" type="button" class="btn btn-primary" value="Register">
+                    </div>
+
+                    <div id="result"></div>
                 </form>
             </main>
             <footer>
