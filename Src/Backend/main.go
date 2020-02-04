@@ -273,9 +273,9 @@ func main() {
 		var userNew User
 		var userOld User
 		c.Bind(&userNew)
-		err := dbmap.SelectOne(&userOld, "SELECT * FROM Users WHERE Email=?", userNew.Email)
+		err := dbmap.SelectOne(&userOld, "SELECT * FROM Users WHERE Username=?", userNew.Username)
 		if err == nil { //exist
-			c.JSON(400, gin.H{"error": "This email is already existing"})
+			c.JSON(200, gin.H{"error": "This username is already existing"})
 		} else { //non-exist
 			tempP := tempPass()
 			pazz := hashAndSalt(userNew.Password)
