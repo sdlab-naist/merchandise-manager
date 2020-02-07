@@ -68,7 +68,6 @@ $(function() {
         var amount = parseInt($('input[name="iamount"]').val());
         
         if(orderId == "") {
-            console.log(orderId)
             $.post('http://163.221.29.46:13131/registerOrder', {
                 ItemID: itemid,
                 Amount: amount
@@ -86,15 +85,13 @@ $(function() {
             total + "円" + "\</td\>\</tr\>\</tbody\>\</table\>")
             })
         } else {
-            console.log(orderId, itemid)
             $.post('http://163.221.29.46:13131/registerOrder', {
                 OrderID: orderId,
                 ItemID: itemid,
                 Amount: amount
             }
         )
-        .done(function(data) { 
-            console.log(data, itemid)
+        .done(function(data) {
             orderId = data;
             var total = price * amount
             $('#result').replaceWith('<div id="result"></div>')
