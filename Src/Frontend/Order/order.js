@@ -1,6 +1,7 @@
 $(function() {
     var orderlist
     var itemlist
+    $('#submit').hide();
 
     $.getJSON('http://163.221.29.46:13131/getItems', {})
     .done(function(data) {
@@ -74,7 +75,8 @@ $(function() {
     $(document).on('click','.select', function() {
         for (l in orderlist) {
             if (orderlist[l]['ID'] == $(this).attr('id')){
-                orderid = orderlist[l]['ID']
+                ordernum = orderlist[l]['ID']
+                orderid = orderlist[l]['OrderID']
                 var iname
                 var price
                 for(i in itemlist) {
@@ -86,55 +88,27 @@ $(function() {
                 }
                 var amount = parseInt(orderlist[l]['Amount'])
                 var total = price * amount
-                $('#order_id').val(orderid)
-                $('#order_name').val(iname)
-                $('#order_price').val(price)
-                $('#order_amount').val(amount)
-                $('#order_total').val(total)
+                $('#order_info').replaceWith('<div id="order_info"></div>')
+                $('#order_info').append("\<div\>Order Info\</div\>\<table\>\<thead\>\<tr\>\<th\>order number\</th\>\<th\>item name\</th\>\<th\>price\</th\>\<th\>amount\</th\>\<th\>total price\</th\>\</tr\>\</thead\>\<tbody\>\<tr\>\<td\>" + 
+                ordernum + "\</td\>\<td\>" +
+                iname + "\</td\>\<td\>" +
+                price + "円" + "\</td\>\<td\>" +
+                amount + "個" + "\</td\>\<td\>" +
+                total + "円" + "\</td\>\</tr\>\</tbody\>\</table\>")
+                $('#submit').show();
                 break
             }
         }
     });
 
-    var orderId = ""
     $('#submit').click(function() {
-        
-        if(orderId == "") {
-            console.log(orderId)
+        if(orderid !== "") {
+            console.log(orderid)
             $.post('http://163.221.29.46:13131/makeOrder', {
-                ItemID: itemid,
-                Amount: amount
-            }
-        )
-        .done(function(data) { 
-            console.log(data)
-            orderId = data;
-            var total = price * amount
-            $('#result').replaceWith('<div id="result"></div>')
-            $('#result').append("\<div\>Added Item\</div\>\<table\>\<thead\>\<tr\>\<th\>name\</th\>\<th\>price\</th\>\<th\>amount\</th\>\<th\>total\</th\>\</tr\>\</thead\>\<tbody\>\<tr\>\<td\>" + 
-            name + "\</td\>\<td\>" +
-            price + "円" + "\</td\>\<td\>" +
-            amount + "個" + "\</td\>\<td\>" +
-            total + "円" + "\</td\>\</tr\>\</tbody\>\</table\>")
+                OrderID: orderid
             })
-        } else {
-            console.log(orderId, itemid)
-            $.post('http://163.221.29.46:13131/registerOrder', {
-                OrderID: orderId,
-                ItemID: itemid,
-                Amount: amount
-            }
-        )
-        .done(function(data) { 
-            console.log(data, itemid)
-            orderId = data;
-            var total = price * amount
-            $('#result').replaceWith('<div id="result"></div>')
-            $('#result').append("\<div\>Added Item\</div\>\<table\>\<thead\>\<tr\>\<th\>name\</th\>\<th\>price\</th\>\<th\>amount\</th\>\<th\>total\</th\>\</tr\>\</thead\>\<tbody\>\<tr\>\<td\>" + 
-            name + "\</td\>\<td\>" +
-            price + "円" + "\</td\>\<td\>" +
-            amount + "個" + "\</td\>\<td\>" +
-            total + "円" + "\</td\>\</tr\>\</tbody\>\</table\>")
+            .done(function(data) { 
+                console.log(data)
             })
         }
     });
