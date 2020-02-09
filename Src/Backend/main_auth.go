@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
+	"os/exec"
 	"strings"
 	"time"
 
@@ -141,11 +142,22 @@ func engine() *gin.Engine {
 	r.GET("/", home)
 	r.POST("/login", login)
 	r.GET("/logout", logout)
+	r.POST("/registerUser", registerUser)
 
 	private := r.Group("/api")
 	private.Use(AuthRequired)
 	{
 		private.GET("/statusUser", status)
+		private.GET("/getItems", getItems)
+		// private.POST("/addItem", addItem)
+		// private.POST("/deleteItem", deleteItem)
+		// private.POST("/registerOrder", registerOrder)
+		// private.POST("/makeOrder", makeOrder)
+		// private.GET("/getOrders", getOrders)
+		// private.POST("/changePassword", changePassword)
+		// private.POST("/requestItem", requestItem)
+		// private.GET("/getRequests", getRequests)
+		// private.POST("/deleteRequest", deleteRequest)
 	}
 	return r
 }
@@ -211,4 +223,31 @@ func status(c *gin.Context) {
 	session := sessions.Default(c)
 	user := session.Get(userkey)
 	c.JSON(http.StatusOK, gin.H{"status": "You are logged in", "user": user})
+}
+
+func registerUser(c *gin.Context) {
+	var userNew User
+	var userOld User
+	c.Bind(&userNew)
+	err := dbmap.SelectOne(&userOld, "SELECT * FROM Users WHERE Username=?", userNew.Username)
+	if err == nil || userOld.Username == userNew.Username || userOld.Email == userNew.Email { //exist
+		c.JSON(200, gin.H{"error": "This username is already existing"})
+	} else { //non-exist
+		tempP := tempPass()
+		pazz := hashAndSalt(userNew.Password)
+		dbmap.Exec(`INSERT INTO Users (Username, Password, TempPassword, Email, Firstname, Lastname, Role) VALUES (?, ?, ?, ?, ?, ?, ?)`, userNew.Username, pazz, tempP, userNew.Email, userNew.Firstname, userNew.Lastname, userNew.Role)
+		fmt.Println("python3 py_email.py " + userNew.Username + " " + userNew.Email + " " + tempP)
+		exec.Command("python3", "py_email.py", userNew.Username, userNew.Email, tempP).Run()
+		c.JSON(200, gin.H{"success": "Register success"})
+	}
+}
+
+func getItems(c *gin.Context) {
+	var items []Item
+	_, err := dbmap.Select(&items, "SELECT * FROM Items")
+	if err == nil {
+		c.JSON(200, items)
+	} else {
+		c.JSON(404, gin.H{"error": "Get Items Error"})
+	}
 }
