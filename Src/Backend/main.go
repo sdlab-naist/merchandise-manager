@@ -280,7 +280,7 @@ func main() {
 			tempP := tempPass()
 			pazz := hashAndSalt(userNew.Password)
 			dbmap.Exec(`INSERT INTO Users (Username, Password, TempPassword, Email, Firstname, Lastname, Role) VALUES (?, ?, ?, ?, ?, ?, ?)`, userNew.Username, pazz, tempP, userNew.Email, userNew.Firstname, userNew.Lastname, userNew.Role);
-			exec.Command("sendemail", userNew.Email, "< 'Thank you for your registration.'")
+			exec.Command("python3","py_email.py",userNew.Username,userNew.Email,tempP)
 			c.JSON(200, gin.H{"success": "Register success"})
 		}
 	})
