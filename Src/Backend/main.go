@@ -13,6 +13,7 @@ import (
 	"strings"
 	"os/exec"
 	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
     _ "github.com/go-sql-driver/mysql"
@@ -59,6 +60,10 @@ type ConfigurationDB struct {
 	Port		string
 	DB_name		string
 }
+
+const (
+	userkey = "user"
+)
 
 func tempPass() string{
 	rand.Seed(time.Now().UnixNano())
@@ -118,6 +123,7 @@ func checkErr(err error, msg string) {
 
 func main() {
 	router := gin.Default()
+	router.Use(gin.Logger())
 	router.Use(cors.Default())
 
 	router.GET("/", func(c *gin.Context){
@@ -269,6 +275,17 @@ func main() {
 	})
 
 	//07
+	router.GET("/logout", func(c *gin.Context){
+		c.String(http.StatusOK,"logout")
+	})
+
+
+	//07
+	router.GET("/statusUser", func(c *gin.Context){
+		c.String(http.StatusOK,"status user")
+	})
+
+	//07
 	router.POST("/registerUser", func(c *gin.Context){
 		var userNew User
 		var userOld User
@@ -300,11 +317,6 @@ func main() {
 			c.JSON(400, gin.H{"error": "Incorrect information"})
 		}
 	})
-
-	// 07
-	// router.POST("/forgotPassword", func(c *gin.Context){
-	// 	c.String(http.StatusOK,"Forgot Password")
-	// })
 
 	//08
 	router.POST("/requestItem", func(c *gin.Context){

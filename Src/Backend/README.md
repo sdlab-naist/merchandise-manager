@@ -92,6 +92,16 @@ POST /login
 }
 @Return "Response message"
 ```
+### Logout
+```
+GET /logout
+@Return "Response message"
+```
+### User status
+```
+GET /statusUser
+@Return "Response message"
+```
 ### Change password
 ```
 POST /changePassword
