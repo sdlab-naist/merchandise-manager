@@ -149,15 +149,15 @@ func engine() *gin.Engine {
 	{
 		private.GET("/statusUser", status)
 		private.GET("/getItems", getItems)
-		// private.POST("/addItem", addItem)
-		// private.POST("/deleteItem", deleteItem)
-		// private.POST("/registerOrder", registerOrder)
-		// private.POST("/makeOrder", makeOrder)
-		// private.GET("/getOrders", getOrders)
-		// private.POST("/changePassword", changePassword)
-		// private.POST("/requestItem", requestItem)
-		// private.GET("/getRequests", getRequests)
-		// private.POST("/deleteRequest", deleteRequest)
+		private.POST("/addItem", addItem)
+		private.POST("/deleteItem", deleteItem)
+		private.POST("/registerOrder", registerOrder)
+		private.POST("/makeOrder", makeOrder)
+		private.GET("/getOrders", getOrders)
+		private.POST("/changePassword", changePassword)
+		private.POST("/requestItem", requestItem)
+		private.GET("/getRequests", getRequests)
+		private.POST("/deleteRequest", deleteRequest)
 	}
 	return r
 }
@@ -249,5 +249,166 @@ func getItems(c *gin.Context) {
 		c.JSON(200, items)
 	} else {
 		c.JSON(404, gin.H{"error": "Get Items Error"})
+	}
+}
+
+func addItem(c *gin.Context) {
+	var itemNew Item
+	var itemOld Item
+	c.Bind(&itemNew)
+	fmt.Println(itemNew.Name)
+	err := dbmap.SelectOne(&itemOld, "SELECT * FROM Items WHERE Name=?", itemNew.Name)
+	if err == nil { // exist
+		if itemNew.Name != "" && itemNew.Amount != 0 {
+			itemNew := Item{
+				ID:     itemOld.ID,
+				Name:   itemOld.Name,
+				Price:  itemNew.Price,
+				Cost:   itemNew.Cost,
+				Amount: itemOld.Amount + itemNew.Amount,
+			}
+			update, _ := dbmap.Exec(`UPDATE Items SET Price=?, Cost=?, Amount=? WHERE ID=? AND Name=?`, itemNew.Price, itemNew.Cost, itemNew.Amount, itemOld.ID, itemOld.Name)
+			if update != nil {
+				c.JSON(200, itemNew)
+			} else {
+				checkErr(err, "Updated failed")
+			}
+		} else {
+			c.JSON(400, gin.H{"error": "Fields are empty"})
+		}
+	} else { // non-exist
+		if itemNew.Name != "" && itemNew.Amount != 0 {
+			if insert, _ := dbmap.Exec(`INSERT INTO Items (Name, Price, Cost, Amount) VALUES (?, ?, ?, ?)`, itemNew.Name, itemNew.Price, itemNew.Cost, itemNew.Amount); insert != nil {
+				item_id, err := insert.LastInsertId()
+				if err == nil {
+					itemNew := &Item{
+						ID:     item_id,
+						Name:   itemNew.Name,
+						Price:  itemNew.Price,
+						Cost:   itemNew.Cost,
+						Amount: itemNew.Amount,
+					}
+					c.JSON(200, itemNew)
+				} else {
+					checkErr(err, "Add Item Error")
+				}
+			}
+		} else {
+			c.JSON(400, gin.H{"error": "Fields are empty"})
+		}
+	}
+}
+
+func deleteItem(c *gin.Context) {
+	var itemNew Item
+	var itemOld Item
+	c.Bind(&itemNew)
+	err := dbmap.SelectOne(&itemOld, "SELECT * FROM Items WHERE ID=?", itemNew.ID)
+	if err == nil { // exist
+		if itemNew.Amount > itemOld.Amount {
+			itemOldAmount := fmt.Sprintf("The number of existing item is %d", itemOld.Amount)
+			c.JSON(400, gin.H{"error": itemOldAmount})
+		}
+		if itemNew.Amount < itemOld.Amount {
+			totalAmount := itemOld.Amount - itemNew.Amount
+			dbmap.Exec(`UPDATE Items SET Price=?, Cost=?, Amount=? WHERE ID=?`, itemOld.Price, itemOld.Cost, totalAmount, itemOld.ID)
+			c.JSON(200, "The item is deleted")
+		}
+		if itemNew.Amount == itemOld.Amount {
+			dbmap.Exec(`DELETE FROM Items WHERE ID=?`, itemOld.ID)
+			c.JSON(200, "The item is deleted")
+		}
+	} else { // non-exist
+		c.JSON(400, gin.H{"error": "The item is not existing"})
+	}
+}
+
+func registerOrder(c *gin.Context) {
+	var ordNew Order
+	var ordOld Order
+	c.Bind(&ordNew)
+	dbmap.SelectOne(&ordOld, "SELECT * FROM Orders WHERE OrderID=?", ordNew.OrderID)
+	if len(ordNew.OrderID) == 0 { // non-exist
+		ordID := tempPass()
+		dbmap.Exec(`INSERT INTO Orders (OrderID, ItemID, Amount) VALUES (?, ?, ?)`, ordID, ordNew.ItemID, ordNew.Amount)
+		c.JSON(200, ordID)
+	} else { // exist
+		dbmap.Exec(`INSERT INTO Orders (OrderID, ItemID, Amount) VALUES (?, ?, ?)`, ordNew.OrderID, ordNew.ItemID, ordNew.Amount)
+		c.JSON(200, ordNew.OrderID)
+	}
+}
+
+func makeOrder(c *gin.Context) {
+	var ordNew Order
+	var ordOld Order
+	c.Bind(&ordNew)
+	err := dbmap.SelectOne(&ordOld, `SELECT * FROM Orders WHERE OrderID=?`, ordNew.OrderID)
+	if err != nil {
+		c.String(http.StatusOK, "Make Order (OrderID:"+ordNew.OrderID+") failed")
+	} else {
+		dbmap.Exec(`DELETE FROM Orders WHERE OrderID=?`, ordNew.OrderID)
+		c.String(http.StatusOK, "Make Order (OrderID:"+ordNew.OrderID+") success")
+	}
+}
+
+func getOrders(c *gin.Context) {
+	var ords []Order
+	_, err := dbmap.Select(&ords, "SELECT * FROM Orders")
+	if err == nil {
+		c.JSON(200, ords)
+	} else {
+		c.JSON(404, gin.H{"error": "Get Orders Error"})
+	}
+}
+
+func changePassword(c *gin.Context) {
+	var userNew User
+	var userOld User
+	c.Bind(&userNew)
+	err := dbmap.SelectOne(&userOld, "SELECT * FROM Users WHERE Email=?", userNew.Email)
+	if err == nil { //exist
+		pazz := hashAndSalt(userNew.Password)
+		dbmap.Exec(`UPDATE Users SET Password=? WHERE Email=? AND Username=?`, pazz, userNew.Email, userNew.Username)
+		c.JSON(200, gin.H{"error": "Your password is updated"})
+	} else { //non-exist
+		c.JSON(400, gin.H{"error": "Incorrect information"})
+	}
+}
+
+func requestItem(c *gin.Context) {
+	var reqNew Request
+	var reqOld Request
+	c.Bind(&reqNew)
+	err := dbmap.SelectOne(&reqOld, "SELECT * FROM Requests WHERE Itemname=? AND Username=?", reqNew.Itemname, reqOld.Username)
+	if err == nil { //exist
+		totalAmount := reqOld.Amount + reqNew.Amount
+		dbmap.Exec(`UPDATE Requests SET Amount=? WHERE Username=? AND Itemname=?`, totalAmount, reqNew.Username, reqNew.Itemname)
+		c.JSON(200, gin.H{"success": "Your requested has already been added"})
+	} else { //non-exist
+		dbmap.Exec(`INSERT INTO Requests (Username, Itemname, Amount, Status) VALUES (?, ?, ?, ?)`, reqNew.Username, reqNew.Itemname, reqNew.Amount, "Added")
+		c.JSON(200, gin.H{"success": "Your requested has already been added"})
+	}
+}
+
+func getRequests(c *gin.Context) {
+	var reqs []Request
+	_, err := dbmap.Select(&reqs, "SELECT * FROM Requests")
+	if err == nil {
+		c.JSON(200, reqs)
+	} else {
+		c.JSON(404, gin.H{"error": "Get Requests Error"})
+	}
+}
+
+func deleteRequest(c *gin.Context) {
+	var reqNew Request
+	var reqOld Request
+	c.Bind(&reqNew)
+	err := dbmap.SelectOne(&reqOld, "SELECT * FROM Requests WHERE ID=?", reqNew.ID)
+	if err == nil { // exist
+		dbmap.Exec(`UPDATE Requests SET Status=? WHERE ID=?`, "Deleted", reqNew.ID)
+		c.JSON(200, gin.H{"success": "Your requested has already been deleted"})
+	} else { // non-exist
+		c.JSON(400, gin.H{"error": "The request is not existing"})
 	}
 }

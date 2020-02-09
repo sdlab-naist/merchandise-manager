@@ -10,7 +10,7 @@ go get -u  github.com/gin-contrib/cors
 ```
 ### Request item list
 ```
-GET /getItems
+GET /api/getItems
 @Return {
     {
       ID:   int,  
@@ -23,7 +23,7 @@ GET /getItems
 ```
 ### Submit add form
 ```
-POST /addItem
+POST /api/addItem
 @Body {
     Name: string,
     Price: double,
@@ -34,7 +34,7 @@ POST /addItem
 ```
 ### Submit delete form
 ```
-POST /deleteItem
+POST /api/deleteItem
 @Body {
     ID: int,
 }
@@ -42,7 +42,7 @@ POST /deleteItem
 ```
 ### Register an order
 ```
-POST /registerOrder
+POST /api/registerOrder
 @Body {
     OrderID: string (optional),
     ItemID: string,
@@ -52,7 +52,7 @@ POST /registerOrder
 ```
 ### Make an order
 ```
-POST /makeOrder
+POST /api/makeOrder
 @Body {
     OrderID: string,
 }
@@ -60,7 +60,7 @@ POST /makeOrder
 ```
 ### Check an order
 ```
-GET /getOrders
+GET /api/getOrders
 @Return {
     {
       ID:   int,  
@@ -99,12 +99,12 @@ GET /logout
 ```
 ### User status
 ```
-GET /statusUser
+GET /api/statusUser
 @Return "Response message"
 ```
 ### Change password
 ```
-POST /changePassword
+POST /api/changePassword
 @Body {
     Username: string,
     Email: string,
@@ -114,7 +114,7 @@ POST /changePassword
 ```
 ### Submit request form
 ```
-POST /requestItem
+POST /api/requestItem
 @Body {
     Username: string,
     Itemname: string,
@@ -124,7 +124,7 @@ POST /requestItem
 ```
 ### Check request list
 ```
-GET /getRequests
+GET /api/getRequests
 @Return {
     {
       ID:   int,  
@@ -137,7 +137,7 @@ GET /getRequests
 ```
 ### Delete request
 ```
-POST /deleteRequest
+POST /api/deleteRequest
 @Body {
     ID: int,
 }
