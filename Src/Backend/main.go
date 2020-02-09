@@ -274,13 +274,14 @@ func main() {
 		var userOld User
 		c.Bind(&userNew)
 		err := dbmap.SelectOne(&userOld, "SELECT * FROM Users WHERE Username=?", userNew.Username)
-		if err == nil { //exist
+		if err == nil || userOld.Username == userNew.Username || userOld.Email == userNew.Email{ //exist
 			c.JSON(200, gin.H{"error": "This username is already existing"})
 		} else { //non-exist
 			tempP := tempPass()
 			pazz := hashAndSalt(userNew.Password)
 			dbmap.Exec(`INSERT INTO Users (Username, Password, TempPassword, Email, Firstname, Lastname, Role) VALUES (?, ?, ?, ?, ?, ?, ?)`, userNew.Username, pazz, tempP, userNew.Email, userNew.Firstname, userNew.Lastname, userNew.Role);
-			exec.Command("python3","py_email.py",userNew.Username,userNew.Email,tempP)
+			fmt.Println("python3 py_email.py "+userNew.Username+" "+userNew.Email+" "+tempP)
+			exec.Command("python3","py_email.py",userNew.Username,userNew.Email,tempP).Run()
 			c.JSON(200, gin.H{"success": "Register success"})
 		}
 	})
