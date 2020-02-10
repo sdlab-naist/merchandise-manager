@@ -12,6 +12,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
@@ -138,6 +139,7 @@ func main() {
 
 func engine() *gin.Engine {
 	r := gin.New()
+	r.Use(cors.Default())
 	r.Use(sessions.Sessions("mysession", sessions.NewCookieStore([]byte("secret"))))
 	r.GET("/", home)
 	r.POST("/login", login)
