@@ -5,6 +5,9 @@
    $.ajax({
       type: "POST",
       crossDomain: true,
+      xhrFields: {
+         withCredentials: true
+      },
       url: "http://163.221.29.46:13131/login",
       data: { "Username": "kundjanasith", "Password": "123456" },
       success: function (jsondata) {
@@ -13,4 +16,5 @@
    })
 </script>
 <a href="http://163.221.29.46:13131/api/getItems" target="_blank">aa</a>
+
 </html>
