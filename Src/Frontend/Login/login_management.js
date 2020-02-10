@@ -1,16 +1,27 @@
 $(function() {
+    jQuery.support.cors = true;
+
     $('#submit').click(function() {
         var uid = $('input[name="uid"]').val();
         var pwd = $('input[name="password"]').val();
         console.log(uid, pwd)
 
-        $.post('http://163.221.29.46:13131/login' ,{
-            Username: uid,
-            Password: pwd
-        })
-        .done(function(data) {
-            console.log(data)
-        })
+        $.ajax({
+            type: "POST",
+            /*crossDomain: true,
+            xhrFields: {
+               withCredentials: true
+            },*/
+            url: "http://163.221.29.46:13131/login",
+            data: { "Username": uid, "Password": pwd },
+            success: function (jsondata) {
+                console.log(jsondata)
+            },
+            error: function (jsondata) {
+                console.log(jsondata)
+            }
+                        
+         }) 
     })
 
 });
