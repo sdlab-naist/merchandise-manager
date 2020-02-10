@@ -50,7 +50,7 @@ $(function() {
         var cost = $('input[name="icost"]').val();
         var amount = $('input[name="iamount"]').val();
         
-        $.post('http://163.221.29.46:13131/addItem', {
+        $.post('http://163.221.29.46:13131/api/addItem', {
             Name: name,
             Price: price,
             Cost: cost,
