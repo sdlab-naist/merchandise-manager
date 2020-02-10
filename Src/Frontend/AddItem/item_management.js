@@ -1,6 +1,6 @@
 $(function() {
 
-    $.getJSON('http://163.221.29.46:13131/getItems', {})
+    $.getJSON('http://163.221.29.46:13131/api/getItems', {})
     .done(function(data) {
         if(data) {
             console.log(data)
