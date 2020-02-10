@@ -15,3 +15,9 @@ cd ~/merchandise-maneger/Src/Frontend/*
 
 AddView
 http://163.221.29.46/AddItem/add_item_view.html
+
+
+ブランチを変えたときの設定方法
+git pull origin <branch_name>
+cd /var/www/html
+sudo cp -r ~/merchandise-manager/Src/Fronted/* .
