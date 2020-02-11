@@ -139,12 +139,21 @@ func main() {
 
 func engine() *gin.Engine {
 	r := gin.New()
+	// config := cors.DefaultConfig()
+	// config.AllowOrigins = []string{"*"}
+	// r.Use(cors.New(config))
 	r.Use(cors.Default())
 	r.Use(sessions.Sessions("mysession", sessions.NewCookieStore([]byte("secret"))))
 	r.GET("/", home)
 	r.POST("/login", login)
 	r.GET("/logout", logout)
 	r.POST("/registerUser", registerUser)
+	r.GET("/loginHTML", loginHTML)
+	r.GET("/loginJS", loginJS)
+	r.GET("/loginCSS", loginCSS)
+	r.GET("/addItemHTML", addItemHTML)
+	r.GET("/addItemJS", addItemJS)
+	r.GET("/addItemCSS", addItemCSS)
 
 	private := r.Group("/api")
 	private.Use(AuthRequired)
@@ -165,6 +174,9 @@ func engine() *gin.Engine {
 }
 
 func AuthRequired(c *gin.Context) {
+	// c.Header("Allow", "POST, GET, OPTIONS")
+	// c.Header("Access-Control-Allow-Origin", "*")
+	// c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 	session := sessions.Default(c)
 	user := session.Get(userkey)
 	if user == nil {
@@ -179,30 +191,46 @@ func home(c *gin.Context) {
 }
 
 func login(c *gin.Context) {
+	// c.Header("Allow", "POST, GET, OPTIONS")
+	// c.Header("Access-Control-Allow-Origin", "*")
+	// c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 	session := sessions.Default(c)
-	var userNew User
+	// var userNew User
 	var userOld User
-	c.Bind(&userNew)
-	err := dbmap.SelectOne(&userOld, "SELECT * FROM Users WHERE Username=? AND Status='Active'", userNew.Username)
+	// c.Bind(&userNew)
+	fmt.Println("-------")
+	// fmt.Println(userNew.Username)
+	// fmt.Println(userNew.Password)
+	uid := c.PostForm("Username")
+	pwd := c.PostForm("Password")
+	fmt.Println(uid)
+	fmt.Println(pwd)
+	fmt.Println("-------")
+	err := dbmap.SelectOne(&userOld, "SELECT * FROM Users WHERE Username=? AND Status='Active'", uid)
+	fmt.Println(userOld)
 	fmt.Println(err)
 	if err == nil { //exist
 		correctPassword := userOld.Password
-		if comparePasswords(correctPassword, userNew.Password) {
-			session.Set(userkey, userNew.Username)
+		if comparePasswords(correctPassword, pwd) {
+			session.Set(userkey, uid)
 			if err := session.Save(); err != nil {
+				fmt.Println("1")
 				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
-				return
+				// return
 			} else {
+				fmt.Println("2")
 				c.JSON(http.StatusOK, gin.H{"message": "Successfully authenticated user"})
-				return
+				// return
 			}
 		} else {
+			fmt.Println("3")
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Incorrect password"})
-			return
+			// return
 		}
 	} else {
+		fmt.Println("4")
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Account is invalid"})
-		return
+		// return
 	}
 }
 
@@ -413,4 +441,28 @@ func deleteRequest(c *gin.Context) {
 	} else { // non-exist
 		c.JSON(400, gin.H{"error": "The request is not existing"})
 	}
+}
+
+func loginHTML(c *gin.Context) {
+	c.File("../Frontend/Login/login_view.html")
+}
+
+func loginJS(c *gin.Context) {
+	c.File("../Frontend/Login/login_management.js")
+}
+
+func loginCSS(c *gin.Context) {
+	c.File("../Frontend/Login/login.css")
+}
+
+func addItemHTML(c *gin.Context) {
+	c.File("../Frontend/AddItem/add_item_view.html")
+}
+
+func addItemJS(c *gin.Context) {
+	c.File("../Frontend/AddItem/item_management.js")
+}
+
+func addItemCSS(c *gin.Context) {
+	c.File("../Frontend/AddItem/add_item.css")
 }
