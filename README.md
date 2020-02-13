@@ -3,6 +3,8 @@ PBL2019
 
 merchandise-manager on sdlab
 
+AddItem URL
+http://163.221.29.46/AddItem/add_item_view.html
 
 Front deployment settings
 使っているサーバー：Nginx
@@ -13,10 +15,6 @@ Front deployment settings
 *  `cd merchandise-maneger`  
 *  `git pull`  
 *  `cd ~/merchandise-maneger/Src/Frontend/` 
-
-AddItem URL
-http://163.221.29.46/AddItem/add_item_view.html
-
 
 ブランチ切り替え
 *  `git pull origin <branch_name>`  
