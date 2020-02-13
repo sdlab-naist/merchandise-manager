@@ -466,3 +466,39 @@ func addItemJS(c *gin.Context) {
 func addItemCSS(c *gin.Context) {
 	c.File("../Frontend/AddItem/add_item.css")
 }
+
+func deleteItemHTML(c *gin.Context) {
+	c.File("../Frontend/DeleteItem/delete_item_view.html")
+}
+
+func deleteItemJS(c *gin.Context) {
+	c.File("../Frontend/DeleteItem/item_management.js")
+}
+
+func deleteItemCSS(c *gin.Context) {
+	c.File("../Frontend/DeleteItem/delete_item.css")
+}
+
+func buyItemHTML(c *gin.Context) {
+	c.File("../Frontend/BuyItem/buy_item_view.html")
+}
+
+func buyItemJS(c *gin.Context) {
+	c.File("../Frontend/BuyItem/item_management.js")
+}
+
+func buyitemCSS(c *gin.Context) {
+	c.File("../Frontend/BuyItem/buy_item.css")
+}
+
+func orderHTML(c *gin.Context) {
+	c.File("../Frontend/Order/order.html")
+}
+
+func orderJS(c *gin.Context) {
+	c.File("../Frontend/Order/order.js")
+}
+
+func orderCSS(c *gin.Context) {
+	c.File("../Frontend/Order/order.css")
+}
