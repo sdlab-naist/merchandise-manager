@@ -4,7 +4,7 @@ PBL2019
 merchandise-manager on sdlab
 
 AddItem URL
-http://163.221.29.46/AddItem/add_item_view.html
+http://163.221.29.46:13131/addItemHTML
 
 Front deployment settings
 使っているサーバー：Nginx
