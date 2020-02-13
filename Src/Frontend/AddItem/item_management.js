@@ -59,7 +59,7 @@ $(function() {
         .done(function(data) {
             console.log(data)
             $('#result').replaceWith('<div id="result"></div>')
-            $('#result').append("\<div\>Added Item\</div\>\<table\>\<thead\>\<tr\>\<th\>name\</th\>\<th\>price\</th\>\<th\>cost\</th\>\<th\>amont\</th\>\</tr\>\</thead\>\<tbody\>\<tr\>\<td\>" + 
+            $('#result').append("\<p class=title\>Added Item\</p\>\<table\>\<thead\>\<tr\>\<th\>name\</th\>\<th\>price\</th\>\<th\>cost\</th\>\<th\>amount\</th\>\</tr\>\</thead\>\<tbody\>\<tr\>\<td\>" + 
             name + "\</td\>\<td\>" +
             price + "円" + "\</td\>\<td\>" +
             cost + "円" + "\</td\>\<td\>" +
