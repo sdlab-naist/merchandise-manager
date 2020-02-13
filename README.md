@@ -8,7 +8,8 @@ Front deployment settings
 使っているサーバー：Nginx
 
 アクセスの仕方
-*  `sshsdlab@163.221.29.46`  
+*  `ssh sdlab@163.221.29.46`
+*  `Password: a306-pbl
 *  `cd merchandise-maneger`  
 *  `git pull`  
 *  `cd ~/merchandise-maneger/Src/Frontend/` 
