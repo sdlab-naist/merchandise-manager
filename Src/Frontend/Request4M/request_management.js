@@ -53,8 +53,7 @@ $(function() {
                 id = requestlist[l]['ID']
                 var name = requestlist[l]['Itemname']
                 var amount = requestlist[l]['Amount']
-                console.log(id, name)
-                $('#id').val(id)
+                $('#oid').val(id)
                 $('#item_name').val(name)
                 $('#item_amount').val(amount)
                 break
@@ -63,7 +62,7 @@ $(function() {
     });
 
     $('#submit').click(function() {
-        var id = $('input[name="id"]').val();
+        var id = $('input[name="oid"]').val();
         var name = $('input[name="iname"]').val();
         console.log(name)
         var amount = parseInt($('input[name="iamount"]').val());
