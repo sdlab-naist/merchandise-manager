@@ -51,7 +51,7 @@ $(function() {
         for (l in requestlist) {
             if (requestlist[l]['ID'] == $(this).attr('id')){
                 id = requestlist[l]['ID']
-                var name = requestlist[l]['Name']
+                var name = requestlist[l]['Itemname']
                 var amount = requestlist[l]['Amount']
                 console.log(id, name)
                 $('#id').val(id)
