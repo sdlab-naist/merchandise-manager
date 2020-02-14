@@ -497,7 +497,7 @@ func buyItemJS(c *gin.Context) {
 	c.File("../Frontend/BuyItem/item_management.js")
 }
 
-func buyitemCSS(c *gin.Context) {
+func buyItemCSS(c *gin.Context) {
 	c.File("../Frontend/BuyItem/buy_item.css")
 }
 
