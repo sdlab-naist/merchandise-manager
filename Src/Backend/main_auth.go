@@ -163,7 +163,12 @@ func engine() *gin.Engine {
 	r.GET("/orderHTML", orderHTML)
 	r.GET("/orderJS", orderJS)
 	r.GET("/orderCSS", orderCSS)
-
+	r.GET("/request4cHTML". request4cHTML)
+	r.GET("/request4cJS", request4cJS)
+	r.GET("/request4cCSS", request4cCSS)
+	r.GET("/request4mHTML", request4mHTML)
+	r.GET("/request4mJS", request4mJS)
+	r.GET("/request4mCSS", request4mCSS)
 
 	private := r.Group("/api")
 	private.Use(AuthRequired)
@@ -511,4 +516,28 @@ func orderJS(c *gin.Context) {
 
 func orderCSS(c *gin.Context) {
 	c.File("../Frontend/Order/order.css")
+}
+
+func request4cHTML(c *gin.Context) {
+	c.File("../Frontend/Request4C/request4c.html")
+}
+
+func request4cJS(c *gin.Context) {
+	c.File("../Frontend/Request4C/request_management.js")
+}
+
+func request4cCSS(c *gin.Context) {
+	c.File("../Frontend/Request4C/request.css")
+}
+
+func request4mHTML(c *gin.Context) {
+	c.File("../Frontend/Request4M/request4m.html")
+}
+
+func request4mJS(c *gin.Context) {
+	c.File("../Frontend/Request4M/request_management.js")
+}
+
+func request4mCSS(c *gin.Context) {
+	c.File("../Frontend/Request4M/request.css")
 }
