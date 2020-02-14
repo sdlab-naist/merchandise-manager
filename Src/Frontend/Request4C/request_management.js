@@ -34,7 +34,7 @@ $(function() {
         .done(function(data) {
             console.log(data)
             $('#result').replaceWith('<div id="result"></div>')
-            $('#result').append("\<p class=title\>Requested Item\</p\>\<table\>\<thead\>\<tr\>\<th\>User Name\</th\>\<th\>Item Name\</th\>\<th\>amount\</th\>\</tr\>\</thead\>\<tbody\>\<tr\>\<td\>" + 
+            $('#result').append("\<p class=title\>Requested Item\</p\>\<table\>\<thead\>\<tr\>\<th\>user name\</th\>\<th\>item name\</th\>\<th\>amount\</th\>\</tr\>\</thead\>\<tbody\>\<tr\>\<td\>" + 
             uid + "\</td\>\<td\>" +
             iname + "\</td\>\<td\>" +
             amount + "個" + "\</td\>\</tr\>\</tbody\>\</table\>")
