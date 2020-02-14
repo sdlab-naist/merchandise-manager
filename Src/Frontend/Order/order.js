@@ -3,7 +3,7 @@ $(function() {
     var itemlist
     $('#submit').hide();
 
-    $.getJSON('http://163.221.29.46:13131/getItems', {})
+    $.getJSON('http://163.221.29.46:13131/api/getItems', {})
     .done(function(data) {
         if(data) {
             itemlist = data
@@ -13,7 +13,7 @@ $(function() {
         } 
     });
 
-    $.getJSON('http://163.221.29.46:13131/getOrders', {})
+    $.getJSON('http://163.221.29.46:13131/api/getOrders', {})
     .done(function(data) {
         if(data) {
             orderlist = data
@@ -104,7 +104,7 @@ $(function() {
     $('#submit').click(function() {
         if(orderid !== "") {
             console.log(orderid)
-            $.post('http://163.221.29.46:13131/makeOrder', {
+            $.post('http://163.221.29.46:13131/api/makeOrder', {
                 OrderID: orderid
             })
             .done(function(data) { 
