@@ -6,19 +6,19 @@ $(function() {
         var pwd = $('input[name="password"]').val();
         console.log(uid, pwd)
 
-        $.post("http://163.221.29.46:13131/login", {
+        jQuery.support.cors = true;
+        $.ajax({
+            type: "POST",
             crossDomain: true,
             xhrFields: {
-               withCredentials: true
+                withCredentials: true
             },
-            data: { "Username": uid, "Password": pwd }
-        })
-        .done(function (data, textStatus) {
-            console.log(data, textStatus, "hoge")
-            //window.location.href = "../AddItem/add_item_view.html"
-        })
-        .fail(function (data, textStatus) {
-            console.log(data, textStatus)
+            url: "http://163.221.29.46:13131/login",
+            data: { "Username": uid, "Password": pwd },
+            success: function (jsondata) {
+                console.log(jsondata)
+                window.location.href = "http://163.221.29.46:13131/addItemHTML"
+            }
         })
     })
 
