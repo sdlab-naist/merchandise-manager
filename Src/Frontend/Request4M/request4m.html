@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="request4mJS"></script>
+        <link rel="stylesheet" href="request4mCSS">
+        <title>Request for Manager</title>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+                    <a class="navbar-brand" href="#">Merchandise-Manager</a>
+                    <button class="navbar-toggler" type="button" id="navbar-button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                      
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                      <ul class="navbar-nav" id="navcontents">
+                        <li class="nav-item">
+                          <a class="nav-link" href="http://163.221.29.46:13131/addItemHTML">Add Item <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item active">
+                          <a class="nav-link" href="http://163.221.29.46:13131/deleteItemHTML">Delete Item</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="http://163.221.29.46:13131/buyItemHTML">Buy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://163.221.29.46:13131/orderHTML">Order</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="http://163.221.29.46:13131/request4cHTML">Request</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </nav>
+            </header>
+            <p>Request for Manager</p>
+            <main>
+                <div class="left">
+                    <table class="item_list">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>user name</th>
+                                <th>item name</th>
+                                <th>amount</th>
+                                <th>status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="list_body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="right">
+                    <form>
+                        <div>
+                            <label id="id" for="oid">id</label>
+                            <input type="text" id="oid" name="oid">
+                        </div> 
+                        <div>
+                            <label id="name" for="item_name">item name</label>
+                            <input type="text" id="item_name" name="iname">
+                        </div> 
+                        <div>
+                            <label id="amount" for="item_amount">amount</label>
+                            <input type="number" id="item_amount" name="iamount">
+                        </div>
+                        <div>
+                            <input id="submit" type="button" class="btn btn-primary" value="Delete">
+                        </div>
+                    </form>
+                </div>
+            </main>
+            <footer>
+                <div id="result"></div>
+            </footer>
+        </div>
+    </body>
+</html>
