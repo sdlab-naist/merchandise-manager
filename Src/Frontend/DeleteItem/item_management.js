@@ -1,6 +1,6 @@
 $(function() {
     var itemlist
-    $.getJSON('http://163.221.29.46:13131/getItems', {})
+    $.getJSON('http://163.221.29.46:13131/api/getItems', {})
     .done(function(data) {
         if(data) {
             console.log(data)
@@ -64,7 +64,7 @@ $(function() {
         var amount = parseInt($('input[name="iamount"]').val());
         console.log(typeof(amount))
         
-        $.post('http://163.221.29.46:13131/deleteItem', {
+        $.post('http://163.221.29.46:13131/api/deleteItem', {
             ID: id,
             Amount: amount
         })
