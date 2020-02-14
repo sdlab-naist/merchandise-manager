@@ -20,3 +20,13 @@ Front deployment settings
 *  `git pull origin <branch_name>`  
 *  `cd /var/www/html`  
 *  `sudo cp -r ~/merchandise-manager/Src/Fronted/* .`  
+
+デプロイ
+* `sudo docker ps -a`
+* find container id has name:great_stonebraker
+* `sudo docker attach <containar id>`
+* `C-c`
+* `git pull`
+* `cd /Src/Backend`
+* `go run main_auth.go`
+* `C-pq`
