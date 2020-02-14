@@ -15,8 +15,8 @@ $(function() {
                 id +  "\</td\>\<td\>" +
                 uid + "\</td\>\<td\>" +
                 iname + "円" + "\</td\>\<td\>" +
-                amount + "円" + "\</td\>\<td\>" +
-                status + "個" + "\</td\>" + 
+                amount + "個" + "\</td\>\<td\>" +
+                status + "\</td\>" + 
                 "\<td>\<input id=" + id + " type=\"button\" class=\"btn btn-default select\" value=\"Select\"\>\</td>\</tr\>")
             }
         } else {
@@ -53,6 +53,7 @@ $(function() {
                 id = requestlist[l]['ID']
                 var name = requestlist[l]['Name']
                 var amount = requestlist[l]['Amount']
+                console.log(id, name)
                 $('#id').val(id)
                 $('#item_name').val(name)
                 $('#item_amount').val(amount)
