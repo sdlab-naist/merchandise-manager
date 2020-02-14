@@ -1,6 +1,6 @@
 $(function() {
     var itemlist
-    $.getJSON('http://163.221.29.46:13131/getItems', {})
+    $.getJSON('http://163.221.29.46:13131/api/getItems', {})
     .done(function(data) {
         if(data) {
             itemlist = data
@@ -68,7 +68,7 @@ $(function() {
         var amount = parseInt($('input[name="iamount"]').val());
         
         if(orderId == "") {
-            $.post('http://163.221.29.46:13131/registerOrder', {
+            $.post('http://163.221.29.46:13131/api/registerOrder', {
                 ItemID: itemid,
                 Amount: amount
             }
@@ -85,7 +85,7 @@ $(function() {
             total + "円" + "\</td\>\</tr\>\</tbody\>\</table\>")
             })
         } else {
-            $.post('http://163.221.29.46:13131/registerOrder', {
+            $.post('http://163.221.29.46:13131/api/registerOrder', {
                 OrderID: orderId,
                 ItemID: itemid,
                 Amount: amount
