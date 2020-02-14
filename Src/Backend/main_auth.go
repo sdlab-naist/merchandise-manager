@@ -163,7 +163,7 @@ func engine() *gin.Engine {
 	r.GET("/orderHTML", orderHTML)
 	r.GET("/orderJS", orderJS)
 	r.GET("/orderCSS", orderCSS)
-	r.GET("/request4cHTML". request4cHTML)
+	r.GET("/request4cHTML", request4cHTML)
 	r.GET("/request4cJS", request4cJS)
 	r.GET("/request4cCSS", request4cCSS)
 	r.GET("/request4mHTML", request4mHTML)
