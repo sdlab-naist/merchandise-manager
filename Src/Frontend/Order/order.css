@@ -82,3 +82,30 @@ table tr:last-child td:first-child {
 table tr:last-child td:last-child {
     border-radius: 0 0 0 0;
 }
+
+/*メニューバーのデザイン*/
+ul{
+    display: table;
+    margin: 0 auto;
+    padding: 0;
+    width: 80%;
+    text-align: center;
+}
+
+ul li{
+    display: table-cell;
+    min-width: 50px;
+}
+
+ul li a{
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    text-decoration: none;
+    color: #555;
+    /*font-weight: bold;*/
+}
+
+ul li.current{
+    background-color: #DEEBF7;
+}
