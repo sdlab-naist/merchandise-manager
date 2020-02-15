@@ -28,6 +28,7 @@ footer {
     height: 100px;
 }
 
+
 /*表のデザイン*/
 
 table{
@@ -167,4 +168,10 @@ header .headline{
 a.navbar-brand {
     font-weight: 100;
     font-size: 30px;
+}
+
+/* コメントの文字サイズ */
+p.title {
+    font-weight: lighter;
+    font-size: 20px;
 }
