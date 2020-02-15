@@ -137,3 +137,34 @@ input#submit {
     border-bottom: 0px solid #336666;
     /*box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;*/
 }
+
+/* headerのデザイン */
+header {
+    height: 100px;
+    width: 100%;
+    padding: 15px 0;
+    /*background-color: #337079;*/
+    color: white;
+}
+header .headline{
+    line-height: 100px;
+    float: left;
+    font-size: 30px;
+    margin-left: 100px;
+}
+.nav-list {
+    line-height: 100px;
+    float: left;
+    margin-left: 30px;
+    list-style: none;
+}
+.nav-list-item {
+    list-style: none;
+    display: inline-block;
+    margin: 0 20px;
+}
+
+a.navbar-brand {
+    font-weight: 100;
+    font-size: 30px;
+}
