@@ -127,7 +127,7 @@ label#name, label#price, label#cost, label#amount {
 }
 
 input#submit {
-    width: 120px;
+    width: 150px;
     text-align: center;
     color:white;
     /*background: linear-gradient(#82bcab,#337079);*/
