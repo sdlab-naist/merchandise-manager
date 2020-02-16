@@ -58,3 +58,31 @@ a.navbar-brand {
     font-weight: 100;
     font-size: 30px;
 }
+
+
+/*メニューバーのデザイン*/
+ul{
+    display: table;
+    margin: 0 auto;
+    padding: 0;
+    width: 80%;
+    text-align: center;
+}
+
+ul li{
+    display: table-cell;
+    min-width: 50px;
+}
+
+ul li a{
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    text-decoration: none;
+    color: #555;
+    /*font-weight: bold;*/
+}
+
+ul li.current{
+    background-color: #DEEBF7;
+}
