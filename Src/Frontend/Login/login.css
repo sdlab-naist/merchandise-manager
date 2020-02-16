@@ -120,8 +120,8 @@ ul li.current{
 }*/
 
 /*formのデザイン*/
-label#name, label#price, label#cost, label#amount {
-    width: 80px;
+label#uid, label#password {
+    width: 100px;
     height: 27px;
     text-align: center;
     color:white;
@@ -135,7 +135,7 @@ label#name, label#price, label#cost, label#amount {
 }
 
 input#submit {
-    width: 100px;
+    width: 70px;
     text-align: center;
     color:white;
     /*background: linear-gradient(#82bcab,#337079);*/
