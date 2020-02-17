@@ -1,0 +1,30 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    flex: 0 0 100px;
+    height: 200px;
+}
+
+main {
+    flex: 1;
+    display: flex;
+}
+
+.left {
+    flex: 1 500px;
+    display: flex;
+}
+
+.right {
+    flex: 0 1 300px;
+}
+
+footer {
+    flex: 0 0 40px;
+    height: 100px;
+}
+

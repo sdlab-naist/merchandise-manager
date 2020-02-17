@@ -1,0 +1,92 @@
+<!-- <html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+   // jQuery.support.cors = true;
+   $.ajax({
+      type: "POST",
+      crossDomain: true,
+      crossOrigin: true,
+      xhrFields: {
+         withCredentials: true
+      },
+      url: "http://163.221.29.46:13131/login",
+      data: { "Username": "kundjanasith", "Password": "123456" },
+      success: function (jsondata) {
+         console.log(jsondata)
+      }
+   })
+</script>
+<a href="http://163.221.29.46:13131/api/getItems" target="_blank">aa</a>
+
+</html> -->
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <!-- <script type="text/javascript" src="login_management.js"></script> -->
+        <!-- <link rel="stylesheet" href="login.css"> -->
+        <script>
+           $(function() {
+    jQuery.support.cors = true;
+
+    $('#submit').click(function() {
+        var uid = $('input[name="uid"]').val();
+        var pwd = $('input[name="password"]').val();
+        console.log(uid, pwd)
+
+        $.ajax({
+            type: "POST",
+            crossDomain: true,
+            xhrFields: {
+               withCredentials: true
+            },
+            url: "http://163.221.29.46:13131/login",
+            data: { "Username": uid, "Password": pwd },
+            success: function (jsondata) {
+                console.log(jsondata)
+            },
+            error: function (jsondata) {
+                console.log(jsondata)
+            }
+                        
+         }) 
+    })
+
+});
+        </script>
+        <title>Login</title>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+                    <a class="navbar-brand" href="#">Merchandise-Manager</a>
+                </nav>
+            </header>
+            <p>Login</p>
+            <main>
+                <form>
+                    <div>
+                        <label id="uid" for="userid">User Name</label>
+                        <input type="text" id="userid" name="uid">
+                    </div>
+                    <div>
+                        <label id="password" for="pwd">Password</label>
+                        <input type="password" id="pwd" name="password">
+                    </div>
+                    <div>
+                        <input id="submit" type="button" class="btn btn-primary" value="Login">
+                    </div>
+                    <a href="../RegisterAccount/register_account_view.html">Register new Account</a>
+                </form>
+            </main>
+            <footer>
+            </footer>
+        </div>
+    </body>
+</html>
+
