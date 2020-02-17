@@ -151,6 +151,9 @@ func engine() *gin.Engine {
 	r.GET("/loginHTML", loginHTML)
 	r.GET("/loginJS", loginJS)
 	r.GET("/loginCSS", loginCSS)
+	r.GET("/registerHTML", registerHTML)
+	r.GET("/registerJS", registerJS)
+	r.GET("/registerCSS", registerCSS)
 	r.GET("/addItemHTML", addItemHTML)
 	r.GET("/addItemJS", addItemJS)
 	r.GET("/addItemCSS", addItemCSS)
@@ -468,6 +471,18 @@ func loginJS(c *gin.Context) {
 
 func loginCSS(c *gin.Context) {
 	c.File("../Frontend/Login/login.css")
+}
+
+func registerHTML(c *gin.Context) {
+	c.File("../Frontend/RegisterAccount/register_account_view.html")
+}
+
+func registerJS(c *gin.Context) {
+	c.File("../Frontend/RegisterAccount/register_account.js")
+}
+
+func registerCSS(c *gin.Context) {
+	c.File("../Frontend/RegisterAccount/register_account.css")
 }
 
 func addItemHTML(c *gin.Context) {
