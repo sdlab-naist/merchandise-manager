@@ -15,7 +15,7 @@ $(function() {
         })
         .done(function (data, textStatus) {
             console.log(data, textStatus, "hoge")
-            //window.location.href = "../AddItem/add_item_view.html"
+            window.location.href = "http://163.221.29.46:13131/addItemHTML"
         })
         .fail(function (data, textStatus) {
             console.log(data, textStatus)
