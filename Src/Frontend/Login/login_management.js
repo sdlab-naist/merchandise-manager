@@ -11,8 +11,8 @@ $(function() {
             xhfFields: {
                 withCredentials: true
             },
-            url: "htt://163.221.29.46:13131/login",
-            data: { "Username": uid, "password": pwd},
+            url: "http://163.221.29.46:13131/login",
+            data: { "Username": uid, "Password": pwd},
             success: function (jsondata) {
                 console.log(jsondata)
                 window.location.href = "http://163.221.29.46:13131/addItemHTML"
