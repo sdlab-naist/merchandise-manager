@@ -120,8 +120,8 @@ ul li.current{
 }*/
 
 /*formのデザイン*/
-label#uid, label#password {
-    width: 100px;
+label#userid, label#itemname, label#amount {
+    width: 130px;
     height: 27px;
     text-align: center;
     color:white;
@@ -135,7 +135,7 @@ label#uid, label#password {
 }
 
 input#submit {
-    width: 70px;
+    width: 100px;
     text-align: center;
     color:white;
     /*background: linear-gradient(#82bcab,#337079);*/
@@ -219,4 +219,3 @@ table th,table td{
   table tr:nth-child(odd){
     background-color: #eee
 } */
-
