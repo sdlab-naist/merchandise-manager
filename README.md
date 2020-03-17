@@ -11,7 +11,6 @@ Front deployment settings
 
 アクセスの仕方
 *  `ssh sdlab@163.221.29.46`
-*  `Password: a306-pbl`
 *  `cd merchandise-maneger`  
 *  `git pull`  
 *  `cd ~/merchandise-maneger/Src/Frontend/` 
